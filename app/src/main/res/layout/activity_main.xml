@@ -15,5 +15,11 @@
         android:elevation="@dimen/dimen_min_default"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"/>
 
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/recylerView_place_list"
+        android:padding="@dimen/dimen_small_default"
+        android:clipToPadding="false"/>
 
 </RelativeLayout>
