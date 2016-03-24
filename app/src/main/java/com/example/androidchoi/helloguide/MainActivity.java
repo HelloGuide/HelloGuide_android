@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import com.example.androidchoi.helloguide.model.PlaceData;
 
@@ -37,11 +38,20 @@ public class MainActivity extends AppCompatActivity {
 
         // Listing Places
         List<PlaceData> placeList = new ArrayList<>();
-        // 5개 샘플 아이템 생성
-        for(int i = 0; i<5; i++){
+        // 10개 샘플 아이템 생성
+        for(int i = 0; i<10; i++){
             PlaceData placeData = new PlaceData();
             placeList.add(placeData);
         }
         mPlaceListAdapter.setItems(placeList);
+
+        // 아이템 클릭 이벤트 설정
+        mPlaceListAdapter.setOnItemClickListener(new PlaceItemViewHolder.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                // 해당 Place 정보 화면 이동 구현
+                Toast.makeText(MainActivity.this, position+"", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

@@ -14,6 +14,11 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceItemViewHolder> 
 
     List<PlaceData> mItems = new ArrayList<>();
 
+    PlaceItemViewHolder.OnItemClickListener mItemClickListener;
+    public void setOnItemClickListener(PlaceItemViewHolder.OnItemClickListener listener) {
+        mItemClickListener = listener;
+    }
+
     // PlaceList item 추가 메소드
     public void setItems(List<PlaceData> items){
         mItems = items;
@@ -29,6 +34,7 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceItemViewHolder> 
     @Override
     public void onBindViewHolder(PlaceItemViewHolder holder, int position) {
         holder.setItems(mItems.get(position));
+        holder.setOnItemClickListener(mItemClickListener);
     }
 
     @Override
