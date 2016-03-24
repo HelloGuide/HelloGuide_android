@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView mRecyclerView;
+    PlaceListAdapter mPlaceListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +25,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Setting RecyclerView, PlaceListAdapter
         mRecyclerView = (RecyclerView)findViewById(R.id.recylerView_place_list);
+        mPlaceListAdapter = new PlaceListAdapter();
+        mRecyclerView.setAdapter(mPlaceListAdapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
+
+        // Listing Places
 
     }
 }

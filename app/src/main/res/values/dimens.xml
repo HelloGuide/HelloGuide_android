@@ -4,5 +4,8 @@
     <dimen name="dimen_small_default">8dp</dimen>
     <dimen name="dimen_min_default">4dp</dimen>
 
-    <dimen name="dimen_toolbar_height">48dp</dimen>
+    <dimen name="dimen_place_image_size">50dp</dimen>
+
+    <dimen name="title_font_size">22dp</dimen>
+    <dimen name="default_font_size">14dp</dimen>
 </resources>
