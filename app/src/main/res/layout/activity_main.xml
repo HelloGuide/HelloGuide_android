@@ -17,9 +17,11 @@
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/recylerView_place_list"
+        android:layout_below="@+id/toolbar"
         android:padding="@dimen/dimen_small_default"
         android:clipToPadding="false"/>
+
 
 </RelativeLayout>

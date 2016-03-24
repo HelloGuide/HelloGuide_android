@@ -7,6 +7,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
+import com.example.androidchoi.helloguide.model.PlaceData;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView mRecyclerView;
@@ -31,6 +36,12 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(layoutManager);
 
         // Listing Places
-
+        List<PlaceData> placeList = new ArrayList<>();
+        // 5개 샘플 아이템 생성
+        for(int i = 0; i<5; i++){
+            PlaceData placeData = new PlaceData();
+            placeList.add(placeData);
+        }
+        mPlaceListAdapter.setItems(placeList);
     }
 }

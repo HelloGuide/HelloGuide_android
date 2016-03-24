@@ -5,13 +5,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.androidchoi.helloguide.model.PlaceData;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class PlaceListAdapter extends RecyclerView.Adapter<PlaceItemViewHolder> {
 
-    List<Objects> mItems = new ArrayList<>();
+    List<PlaceData> mItems = new ArrayList<>();
+
+    // PlaceList item 추가 메소드
+    public void setItems(List<PlaceData> items){
+        mItems = items;
+        notifyDataSetChanged();
+    }
 
     @Override
     public PlaceItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -21,7 +28,7 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceItemViewHolder> 
 
     @Override
     public void onBindViewHolder(PlaceItemViewHolder holder, int position) {
-
+        holder.setItems(mItems.get(position));
     }
 
     @Override
