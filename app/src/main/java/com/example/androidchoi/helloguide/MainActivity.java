@@ -1,13 +1,14 @@
 package com.example.androidchoi.helloguide;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
 
+import com.example.androidchoi.helloguide.Adapter.PlaceListAdapter;
 import com.example.androidchoi.helloguide.model.PlaceData;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         List<PlaceData> placeList = new ArrayList<>();
         // 10개 샘플 아이템 생성
         for(int i = 0; i<10; i++){
-            PlaceData placeData = new PlaceData();
+            PlaceData placeData = new PlaceData( "PlaceName"+i , "PlaceContent"+i);
             placeList.add(placeData);
         }
         mPlaceListAdapter.setItems(placeList);
@@ -50,7 +51,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position) {
                 // 해당 Place 정보 화면 이동 구현
-                Toast.makeText(MainActivity.this, position+"", Toast.LENGTH_SHORT).show();
+                // PlaceData객체를 Extra로 담아 intent call
+                Intent intent = new Intent(MainActivity.this, PlaceInfoActivity.class);
+                intent.putExtra(PlaceInfoActivity.PLACEDATA, mPlaceListAdapter.getItem(position));
+                startActivity(intent);
             }
         });
     }

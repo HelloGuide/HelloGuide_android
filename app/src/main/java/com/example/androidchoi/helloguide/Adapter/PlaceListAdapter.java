@@ -1,10 +1,12 @@
-package com.example.androidchoi.helloguide;
+package com.example.androidchoi.helloguide.Adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.androidchoi.helloguide.PlaceItemViewHolder;
+import com.example.androidchoi.helloguide.R;
 import com.example.androidchoi.helloguide.model.PlaceData;
 
 import java.util.ArrayList;
@@ -17,6 +19,11 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceItemViewHolder> 
     PlaceItemViewHolder.OnItemClickListener mItemClickListener;
     public void setOnItemClickListener(PlaceItemViewHolder.OnItemClickListener listener) {
         mItemClickListener = listener;
+    }
+
+    // PlaceData get 메소드
+    public PlaceData getItem(int position){
+        return mItems.get(position);
     }
 
     // PlaceList item 추가 메소드

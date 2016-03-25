@@ -18,10 +18,10 @@ public class PlaceItemViewHolder extends RecyclerView.ViewHolder {
         mListener = listener;
     }
 
-
     TextView mTextPlaceName;
     TextView mTextPlaceContent;
     ImageView mImagePlace;
+    PlaceData mPlaceData;
 
     public PlaceItemViewHolder(View itemView) {
         super(itemView);
