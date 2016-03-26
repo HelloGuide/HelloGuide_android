@@ -13,9 +13,13 @@ public class PlaceInfoPagerAdapter extends FragmentStatePagerAdapter {
     private String[] mTabTitles = new String[PAGE_COUNT];
     private List<Fragment> mFragments = new ArrayList<>();
 
-    public PlaceInfoPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
+    public PlaceInfoPagerAdapter(FragmentManager fm) {
         super(fm);
-        mFragments = fragments;
+    }
+
+    // 탭 프래그먼트 추가
+    public void addFragment(Fragment fragment){
+        mFragments.add(fragment);
     }
 
     // 탭 이름 설정 메소드

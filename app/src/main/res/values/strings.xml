@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Hello Guide</string>
+
+    <string name="place_info">정보</string>
+    <string name="place_search">위치 검색</string>
+
+
 </resources>
