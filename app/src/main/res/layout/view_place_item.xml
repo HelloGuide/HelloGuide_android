@@ -8,7 +8,7 @@
         android:id="@+id/cardView_app_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_small_default"
+        android:layout_margin="@dimen/dimen_min_default"
         android:foreground="?android:attr/selectableItemBackground"
         app:cardCornerRadius="@dimen/dimen_min_default">
 
@@ -27,6 +27,9 @@
 
             <TextView
                 android:id="@+id/text_place_name"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textColor="@android:color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -34,10 +37,12 @@
                 android:layout_toRightOf="@+id/image_place"
                 android:paddingLeft="@dimen/dimen_default"
                 android:textSize="@dimen/title_font_size"
-                android:layout_marginBottom="@dimen/dimen_small_default"/>
+                />
 
             <TextView
                 android:id="@+id/text_place_content"
+                android:maxLines="2"
+                android:ellipsize="end"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/text_place_name"
