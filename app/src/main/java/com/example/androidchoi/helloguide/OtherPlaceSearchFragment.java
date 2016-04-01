@@ -7,12 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
+import net.daum.mf.map.api.MapPOIItem;
+import net.daum.mf.map.api.MapPoint;
+import net.daum.mf.map.api.MapView;
 
 
 /**
@@ -20,13 +17,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
  */
 public class OtherPlaceSearchFragment extends Fragment {
 
-    static final LatLng DEFAULT_POINT = new LatLng( 37.56, 126.97);
-    private GoogleMap map;
+    MapView mMapView;
 
     public OtherPlaceSearchFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,12 +29,40 @@ public class OtherPlaceSearchFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_other_place_search, container, false);
 
-        getFragmentManager().findFragmentById(R.id.map);
-        map = ((MapFragment)getActivity().getFragmentManager().findFragmentById(R.id.map)).getMap();
-        Marker seoul = map.addMarker(new MarkerOptions().position(DEFAULT_POINT).title("Seoul"));
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_POINT, 15));
-        map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+        // daum map 생성
+        mMapView = new MapView(getActivity());
+        mMapView.setDaumMapApiKey(getString(R.string.API_KEY));
+        ViewGroup mapViewContainer = (ViewGroup) view.findViewById(R.id.map_view);
+        mapViewContainer.addView(mMapView);
+        settingMapView();
+        settingMapMarker();
         return view;
+    }
+
+    // map 설정 변경 method
+    public void settingMapView() {
+        // 중심점 변경
+        mMapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.577705, 126.977036), true);
+        // 줌 레벨 변경
+        mMapView.setZoomLevel(1, true);
+        // 중심점 변경 + 줌 레벨 변경
+        // mMapView.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(33.41, 126.52), 9, true);
+        // 줌 인
+        mMapView.zoomIn(true);
+        // 줌 아웃
+        mMapView.zoomOut(true);
+    }
+
+    // map marker 설정 method
+    public void settingMapMarker(){
+        MapPOIItem marker = new MapPOIItem();
+        marker.setItemName(getString(R.string.gyeongbokgung));
+        marker.setTag(0);
+        marker.setMapPoint(MapPoint.mapPointWithGeoCoord(37.577705, 126.977036));
+        marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
+        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+
+        mMapView.addPOIItem(marker);
     }
 
 

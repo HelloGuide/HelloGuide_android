@@ -3,6 +3,7 @@
 
     <string name="place_info">정보</string>
     <string name="place_search">위치 검색</string>
+    <string name="gyeongbokgung">경복궁</string>
 
-    <string name="API_KEY">AIzaSyB_Xc9io9Iuskfxukt37KLNNXTagt2a6zA</string>
+    <string name="API_KEY">848629993aa13298a1e4ddeb254e716d</string>
 </resources>
