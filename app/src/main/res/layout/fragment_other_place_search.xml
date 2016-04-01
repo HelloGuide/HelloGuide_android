@@ -5,9 +5,11 @@
              tools:context="com.example.androidchoi.helloguide.OtherPlaceSearchFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <fragment
+        android:id="@+id/map"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="OtherPlaceSearchFragment"/>
+        android:layout_height="300dp"
+        android:layout_margin="@dimen/dimen_small_default"
+        class="com.google.android.gms.maps.MapFragment" />
 
 </FrameLayout>
