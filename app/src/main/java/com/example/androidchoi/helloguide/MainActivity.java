@@ -41,8 +41,7 @@ public class MainActivity extends AppCompatActivity {
         List<PlaceData> placeList = new ArrayList<>();
         // 10개 샘플 아이템 생성
         for(int i = 0; i<10; i++){
-
-            PlaceData placeData = new PlaceData( "PlaceName"+i , "PlaceContent"+i);
+            PlaceData placeData = new PlaceData();
             placeList.add(placeData);
         }
         // 서버에서 Data 요청
