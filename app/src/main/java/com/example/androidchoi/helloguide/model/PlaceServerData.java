@@ -1,5 +1,7 @@
 package com.example.androidchoi.helloguide.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Choi on 2016-04-04.
  */
@@ -9,7 +11,7 @@ package com.example.androidchoi.helloguide.model;
     API에서 제공 하지 않는 정보 저장.
     API요청에 필요한 종목코드, 지정번호, 시도코드 저장
 */
-public class PlaceServerData {
+public class PlaceServerData implements Serializable { // 인텐트 전달을 위해 Serializable 인터페이스 구현
 
     private String mName;
     private String mSimpleContent; // 간략 정보

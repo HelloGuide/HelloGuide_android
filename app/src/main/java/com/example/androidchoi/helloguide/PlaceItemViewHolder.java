@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.androidchoi.helloguide.model.PlaceData;
+import com.example.androidchoi.helloguide.model.PlaceServerData;
 
 public class PlaceItemViewHolder extends RecyclerView.ViewHolder {
 
@@ -39,9 +39,9 @@ public class PlaceItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     // View 세팅 메소드
-    public void setItems(PlaceData placeData){
-        mTextPlaceName.setText(placeData.getName());
-        mTextPlaceContent.setText(placeData.getContent());
+    public void setItems(PlaceServerData placeServerData){
+        mTextPlaceName.setText(placeServerData.getName());
+        mTextPlaceContent.setText(placeServerData.getSimpleContent());
 //        mImagePlace.setImageResource(placeData.getImageReSources());
     }
 }

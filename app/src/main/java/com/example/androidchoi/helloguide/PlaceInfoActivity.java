@@ -10,7 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.example.androidchoi.helloguide.Adapter.PlaceInfoPagerAdapter;
-import com.example.androidchoi.helloguide.model.PlaceData;
+import com.example.androidchoi.helloguide.model.PlaceServerData;
 
 public class PlaceInfoActivity extends AppCompatActivity {
 
@@ -27,12 +27,12 @@ public class PlaceInfoActivity extends AppCompatActivity {
 
         // 이전 activity에서 전달된 intent
         Intent intent = getIntent();
-        PlaceData placeData = (PlaceData)intent.getSerializableExtra(PLACEDATA);
+        PlaceServerData placeServerData = (PlaceServerData)intent.getSerializableExtra(PLACEDATA);
 
         // Setting Toolbar
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         // 해당 위치 이름으로 toolbar title 변경
-        toolbar.setTitle(placeData.getName());
+        toolbar.setTitle(placeServerData.getName());
         toolbar.setTitleTextColor(ContextCompat.getColor(getBaseContext(), android.R.color.white));
         setSupportActionBar(toolbar);
         // home 버튼 설정
