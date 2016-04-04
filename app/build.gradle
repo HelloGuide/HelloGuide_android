@@ -30,4 +30,10 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     // Daum map api
     compile files('libs/libDaumMapAndroid.jar')
+    // XML Pasing Library
+    compile files('libs/simpleXmlParser.jar')
+    // Http 통신 Volley Library
+    compile files('libs/volley_library.jar')
+    // Json Parsing Library
+    compile 'com.google.code.gson:gson:2.2.4'
 }

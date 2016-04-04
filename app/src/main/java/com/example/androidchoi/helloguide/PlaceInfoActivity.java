@@ -39,12 +39,12 @@ public class PlaceInfoActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon_back);
 
-        // 탭 화면 설정
+        // 탭 설정
         mPlaceInfoPagerAdapter = new PlaceInfoPagerAdapter(getSupportFragmentManager());
         mPlaceInfoPagerAdapter.addFragment(new PlaceContentFragment());
         mPlaceInfoPagerAdapter.addFragment(new OtherPlaceSearchFragment());
-        // 탭 이름 설정
-        mPlaceInfoPagerAdapter.setTabList(new String[]{getString(R.string.place_info), getString(R.string.place_search)});
+        mPlaceInfoPagerAdapter.setTabList(new String[]{getString(R.string.place_info), getString(R.string.place_search)}); // 탭 이름 설정
+
         // 뷰페이저 설정
         mViewPager = (ViewPager)findViewById(R.id.view_pager);
         mViewPager.setAdapter(mPlaceInfoPagerAdapter);
