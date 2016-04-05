@@ -26,7 +26,7 @@ public class PlaceItemViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         mTextPlaceName = (TextView)itemView.findViewById(R.id.text_place_name);
         mTextPlaceContent = (TextView)itemView.findViewById(R.id.text_place_content);
-        mImagePlace = (ImageView)itemView.findViewById(R.id.image_place);
+        mImagePlace = (ImageView)itemView.findViewById(R.id.image_place_thumb);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

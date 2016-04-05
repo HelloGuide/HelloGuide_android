@@ -18,7 +18,7 @@
             android:padding="@dimen/dimen_small_default">
 
             <ImageView
-                android:id="@+id/image_place"
+                android:id="@+id/image_place_thumb"
                 android:layout_width="@dimen/dimen_place_image_size"
                 android:layout_height="@dimen/dimen_place_image_size"
                 android:layout_centerVertical="true"
@@ -34,10 +34,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/image_place"
-                android:layout_toRightOf="@+id/image_place"
+                android:layout_toEndOf="@+id/image_place_thumb"
+                android:layout_toRightOf="@+id/image_place_thumb"
                 android:paddingLeft="@dimen/dimen_default"
-                android:textSize="@dimen/title_font_size"
+                android:textSize="@dimen/large_font_size"
                 />
 
             <TextView
