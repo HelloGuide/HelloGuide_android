@@ -19,12 +19,13 @@
 
             <ImageView
                 android:id="@+id/image_place_thumb"
-                android:layout_width="@dimen/dimen_place_image_size"
-                android:layout_height="@dimen/dimen_place_image_size"
+                android:layout_width="@dimen/dimen_place_image_width"
+                android:layout_height="@dimen/dimen_place_image_height"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:src="@mipmap/ic_launcher"/>
+                android:scaleType="centerCrop"
+                android:src="@drawable/image_place_default"/>
 
             <TextView
                 android:id="@+id/text_place_name"

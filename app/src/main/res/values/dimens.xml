@@ -4,7 +4,8 @@
     <dimen name="dimen_small_default">8dp</dimen>
     <dimen name="dimen_min_default">4dp</dimen>
 
-    <dimen name="dimen_place_image_size">60dp</dimen>
+    <dimen name="dimen_place_image_width">80dp</dimen>
+    <dimen name="dimen_place_image_height">60dp</dimen>
 
     <dimen name="title_font_size">24dp</dimen>
     <dimen name="large_font_size">18dp</dimen>

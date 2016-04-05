@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.androidchoi.helloguide.Manager.NetworkManager;
 import com.example.androidchoi.helloguide.model.PlaceData;
 import com.example.androidchoi.helloguide.model.PlaceServerData;
@@ -79,5 +80,13 @@ public class PlaceContentFragment extends Fragment {
     public void setViewContent(PlaceData data){
         mTextName.setText(data.getName());
         mTextContent.setText(data.getContent());
+        Glide.with(getActivity())
+                .load(data.getImageUrl())
+                .centerCrop()
+                .placeholder(R.drawable.image_place_default)
+                .thumbnail(0.3f)
+                .into(mImagePlace);
+
+
     }
 }

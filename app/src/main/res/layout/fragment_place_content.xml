@@ -13,22 +13,25 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="250dp"
+            android:src="@drawable/image_place_default"
             android:id="@+id/image_place"
-            android:layout_marginBottom="@dimen/dimen_default"/>
+            android:layout_marginBottom="@dimen/dimen_default"
+            android:scaleType="centerCrop"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/title_font_size"
-            android:shadowColor="@android:color/darker_gray"
+            android:shadowColor="@android:color/black"
             android:shadowDx="4"
             android:shadowDy="4"
             android:shadowRadius="4"
             android:id="@+id/text_place_name"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:layout_alignBottom="@+id/image_place"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignRight="@+id/image_place"
+            android:layout_alignEnd="@+id/image_place"
+            android:layout_margin="@dimen/dimen_small_default"/>
 
         <TextView
             android:layout_width="match_parent"
