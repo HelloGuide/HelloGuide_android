@@ -3,9 +3,14 @@ package com.example.androidchoi.helloguide;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.androidchoi.helloguide.Adapter.PlaceListAdapter;
+import com.example.androidchoi.helloguide.model.PlaceServerData;
 
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
@@ -18,6 +23,8 @@ import net.daum.mf.map.api.MapView;
 public class OtherPlaceSearchFragment extends Fragment {
 
     MapView mMapView;
+    RecyclerView mRecyclerView;
+    PlaceListAdapter mPlaceListAdapter;
 
     public OtherPlaceSearchFragment() {
         // Required empty public constructor
@@ -36,6 +43,29 @@ public class OtherPlaceSearchFragment extends Fragment {
         mapViewContainer.addView(mMapView);
         settingMapView();
         settingMapMarker();
+
+        // Setting RecyclerView, PlaceListAdapter
+        mRecyclerView = (RecyclerView)view.findViewById(R.id.recylerView_other_place_list);
+        mPlaceListAdapter = new PlaceListAdapter();
+        mRecyclerView.setAdapter(mPlaceListAdapter);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(layoutManager);
+
+        // Listing Places
+        // List<PlaceServerData> placeList = new ArrayList<>();
+
+        // 샘플 아이템 생성
+        mPlaceListAdapter.addItems(new PlaceServerData("근정전", "근정전", "", "11",  "02230000", "11"));
+        mPlaceListAdapter.addItems(new PlaceServerData("경회루", "경회루", "", "11",  "02240000", "11"));
+        mPlaceListAdapter.addItems(new PlaceServerData("자경전", "자경전", "", "12",  "08090000", "11"));
+        mPlaceListAdapter.addItems(new PlaceServerData("십장생 굴뚝", "십장생 굴뚝", "", "12",  "08100000", "11"));
+        mPlaceListAdapter.addItems(new PlaceServerData("아미산 굴뚝", "아미산 굴뚝", "", "12",  "08110000", "11"));
+        mPlaceListAdapter.addItems(new PlaceServerData("근정문 및 행각", "근정문 및 행각", "", "12",  "08120000", "11"));
+        mPlaceListAdapter.addItems(new PlaceServerData("풍기대", "풍기대", "", "12",  "08470000", "11"));
+        mPlaceListAdapter.addItems(new PlaceServerData("사정전", "사정전", "", "12",  "17590000", "11"));
+        mPlaceListAdapter.addItems(new PlaceServerData("수정전", "수정전", "", "12",  "17600000", "11"));
+        mPlaceListAdapter.addItems(new PlaceServerData("향원정", "향원정", "", "12",  "17610000", "11"));
+        mPlaceListAdapter.addItems(new PlaceServerData("육상궁", "육상궁", "", "13",  "01490000", "11"));
         return view;
     }
 
