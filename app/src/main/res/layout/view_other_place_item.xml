@@ -5,7 +5,7 @@
                 android:layout_height="match_parent">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cardView_place_item"
+        android:id="@+id/cardView_other_place_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dimen_min_default"
@@ -17,41 +17,18 @@
             android:layout_height="match_parent"
             android:padding="@dimen/dimen_small_default">
 
-            <ImageView
-                android:id="@+id/image_place_thumb"
-                android:layout_width="@dimen/dimen_place_image_width"
-                android:layout_height="@dimen/dimen_place_image_height"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/image_place_default"/>
-
             <TextView
-                android:id="@+id/text_place_name"
+                android:id="@+id/text_other_place_name"
                 android:singleLine="true"
                 android:ellipsize="end"
                 android:textColor="@android:color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/image_place_thumb"
-                android:layout_toRightOf="@+id/image_place_thumb"
                 android:paddingLeft="@dimen/dimen_default"
                 android:textSize="@dimen/large_font_size"
                 />
 
-            <TextView
-                android:id="@+id/text_place_content"
-                android:maxLines="2"
-                android:ellipsize="end"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/text_place_name"
-                android:layout_alignStart="@+id/text_place_name"
-                android:layout_below="@+id/text_place_name"
-                android:paddingLeft="@dimen/dimen_default"
-                android:textSize="@dimen/default_font_size"/>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 

@@ -3,14 +3,13 @@ package com.example.androidchoi.helloguide;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.androidchoi.helloguide.Adapter.PlaceListAdapter;
-import com.example.androidchoi.helloguide.model.PlaceServerData;
+import com.example.androidchoi.helloguide.Adapter.OtherPlaceListAdapter;
 
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
@@ -24,7 +23,7 @@ public class OtherPlaceSearchFragment extends Fragment {
 
     MapView mMapView;
     RecyclerView mRecyclerView;
-    PlaceListAdapter mPlaceListAdapter;
+    OtherPlaceListAdapter mOhterPlaceListAdapter;
 
     public OtherPlaceSearchFragment() {
         // Required empty public constructor
@@ -46,26 +45,26 @@ public class OtherPlaceSearchFragment extends Fragment {
 
         // Setting RecyclerView, PlaceListAdapter
         mRecyclerView = (RecyclerView)view.findViewById(R.id.recylerView_other_place_list);
-        mPlaceListAdapter = new PlaceListAdapter();
-        mRecyclerView.setAdapter(mPlaceListAdapter);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        mOhterPlaceListAdapter = new OtherPlaceListAdapter();
+        mRecyclerView.setAdapter(mOhterPlaceListAdapter);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(),2, GridLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
 
         // Listing Places
         // List<PlaceServerData> placeList = new ArrayList<>();
 
         // 샘플 아이템 생성
-        mPlaceListAdapter.addItems(new PlaceServerData("근정전", "근정전", "", "11",  "02230000", "11"));
-        mPlaceListAdapter.addItems(new PlaceServerData("경회루", "경회루", "", "11",  "02240000", "11"));
-        mPlaceListAdapter.addItems(new PlaceServerData("자경전", "자경전", "", "12",  "08090000", "11"));
-        mPlaceListAdapter.addItems(new PlaceServerData("십장생 굴뚝", "십장생 굴뚝", "", "12",  "08100000", "11"));
-        mPlaceListAdapter.addItems(new PlaceServerData("아미산 굴뚝", "아미산 굴뚝", "", "12",  "08110000", "11"));
-        mPlaceListAdapter.addItems(new PlaceServerData("근정문 및 행각", "근정문 및 행각", "", "12",  "08120000", "11"));
-        mPlaceListAdapter.addItems(new PlaceServerData("풍기대", "풍기대", "", "12",  "08470000", "11"));
-        mPlaceListAdapter.addItems(new PlaceServerData("사정전", "사정전", "", "12",  "17590000", "11"));
-        mPlaceListAdapter.addItems(new PlaceServerData("수정전", "수정전", "", "12",  "17600000", "11"));
-        mPlaceListAdapter.addItems(new PlaceServerData("향원정", "향원정", "", "12",  "17610000", "11"));
-        mPlaceListAdapter.addItems(new PlaceServerData("육상궁", "육상궁", "", "13",  "01490000", "11"));
+        mOhterPlaceListAdapter.addItems(new String("근정전"));
+        mOhterPlaceListAdapter.addItems(new String("경회루"));
+        mOhterPlaceListAdapter.addItems(new String("자경전"));
+        mOhterPlaceListAdapter.addItems(new String("십장생 굴뚝"));
+        mOhterPlaceListAdapter.addItems(new String("아미산 굴뚝"));
+        mOhterPlaceListAdapter.addItems(new String("근정문 및 행각"));
+        mOhterPlaceListAdapter.addItems(new String("풍기대"));
+        mOhterPlaceListAdapter.addItems(new String("사정전"));
+        mOhterPlaceListAdapter.addItems(new String("수정전"));
+        mOhterPlaceListAdapter.addItems(new String("향원정"));
+        mOhterPlaceListAdapter.addItems(new String("육상궁"));
         return view;
     }
 

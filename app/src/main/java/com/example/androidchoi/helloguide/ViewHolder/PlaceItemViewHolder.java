@@ -1,10 +1,11 @@
-package com.example.androidchoi.helloguide;
+package com.example.androidchoi.helloguide.ViewHolder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.androidchoi.helloguide.R;
 import com.example.androidchoi.helloguide.model.PlaceServerData;
 
 public class PlaceItemViewHolder extends RecyclerView.ViewHolder {

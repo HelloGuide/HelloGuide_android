@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.androidchoi.helloguide.PlaceItemViewHolder;
+import com.example.androidchoi.helloguide.ViewHolder.PlaceItemViewHolder;
 import com.example.androidchoi.helloguide.R;
 import com.example.androidchoi.helloguide.model.PlaceServerData;
 

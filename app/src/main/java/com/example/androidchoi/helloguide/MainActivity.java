@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.example.androidchoi.helloguide.Adapter.PlaceListAdapter;
+import com.example.androidchoi.helloguide.ViewHolder.PlaceItemViewHolder;
 import com.example.androidchoi.helloguide.model.PlaceServerData;
 
 public class MainActivity extends AppCompatActivity {
