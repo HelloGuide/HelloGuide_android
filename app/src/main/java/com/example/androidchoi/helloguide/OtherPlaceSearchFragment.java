@@ -15,6 +15,7 @@ import com.example.androidchoi.helloguide.model.PlaceServerData;
 
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
+import net.daum.mf.map.api.MapPolyline;
 import net.daum.mf.map.api.MapView;
 
 
@@ -60,7 +61,7 @@ public class OtherPlaceSearchFragment extends Fragment {
         ViewGroup mapViewContainer = (ViewGroup) view.findViewById(R.id.map_view);
         mapViewContainer.addView(mMapView);
         settingMapView();
-        settingMapMarker();
+        settingStartMarker(); // 출발지 마커 표시
 
         // Setting RecyclerView, PlaceListAdapter
         mRecyclerView = (RecyclerView)view.findViewById(R.id.recylerView_other_place_list);
@@ -90,6 +91,7 @@ public class OtherPlaceSearchFragment extends Fragment {
             @Override
             public void onItemClick(int position) {
                 // 1. 지도 경로 출력
+                showRoute();
                 // 2. 선택 위치 정보 서버에 전달
             }
         });
@@ -100,14 +102,44 @@ public class OtherPlaceSearchFragment extends Fragment {
     // 지도에 경로 출력 method
     public void showRoute(){
 
+        MapPOIItem existingPOIItemEnd = mMapView.findPOIItemByTag(1002);
+        if (existingPOIItemEnd != null) {
+            mMapView.removePOIItem(existingPOIItemEnd);
+        }
+        MapPolyline existingPolyline = mMapView.findPolylineByTag(2000);
+        if (existingPolyline != null) {
+            mMapView.removePolyline(existingPolyline);
+        }
+
+        MapPOIItem poiItemEnd = new MapPOIItem();
+        poiItemEnd.setItemName("End");
+        poiItemEnd.setTag(1002);
+        poiItemEnd.setMapPoint(MapPoint.mapPointWithGeoCoord(37.578575, 126.977036));
+        poiItemEnd.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+        poiItemEnd.setShowAnimationType(MapPOIItem.ShowAnimationType.SpringFromGround);
+        poiItemEnd.setShowCalloutBalloonOnTouch(false);
+        poiItemEnd.setCustomImageResourceId(R.drawable.image_marker_end);
+        poiItemEnd.setCustomImageAnchorPointOffset(new MapPOIItem.ImageOffset(29, 2));
+        mMapView.addPOIItem(poiItemEnd);
+
+//        MapPolyline polyline2 = new MapPolyline(21);
+//        polyline2.setTag(2000);
+//        polyline2.setLineColor(Color.argb(128, 0, 0, 255));
+//        polyline2.addPoints(mPolyline2Points);
+//        mMapView.addPolyline(polyline2);
+//
+//        MapPointBounds mapPointBounds = new MapPointBounds(mPolyline2Points);
+//        int padding = 200; // px
+//        mMapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
+
     }
 
     // map 설정 변경 method
     public void settingMapView() {
         // 중심점 변경
-        mMapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.577705, 126.977036), true);
+        mMapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.579617, 126.977448), true);
         // 줌 레벨 변경
-        mMapView.setZoomLevel(1, true);
+        mMapView.setZoomLevel(2, true);
         // 중심점 변경 + 줌 레벨 변경
         // mMapView.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(33.41, 126.52), 9, true);
         // 줌 인
@@ -116,15 +148,27 @@ public class OtherPlaceSearchFragment extends Fragment {
         mMapView.zoomOut(true);
     }
 
-    // map marker 설정 method
-    public void settingMapMarker(){
-        MapPOIItem marker = new MapPOIItem();
-        marker.setItemName(getString(R.string.gyeongbokgung));
-        marker.setTag(0);
-        marker.setMapPoint(MapPoint.mapPointWithGeoCoord(37.577705, 126.977036));
-        marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
-        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-        mMapView.addPOIItem(marker);
+    // map start marker 설정 method
+    public void settingStartMarker(){
+
+        MapPOIItem poiItemStart = new MapPOIItem();
+        poiItemStart.setItemName("Start");
+        poiItemStart.setTag(1001);
+        poiItemStart.setMapPoint(MapPoint.mapPointWithGeoCoord(37.579769,126.976036));
+        poiItemStart.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+        poiItemStart.setShowAnimationType(MapPOIItem.ShowAnimationType.SpringFromGround);
+        poiItemStart.setShowCalloutBalloonOnTouch(false);
+        poiItemStart.setCustomImageResourceId(R.drawable.image_marker_start);
+        poiItemStart.setCustomImageAnchorPointOffset(new MapPOIItem.ImageOffset(29, 2));
+        mMapView.addPOIItem(poiItemStart);
+
+//        MapPOIItem marker = new MapPOIItem();
+//        marker.setItemName(getString(R.string.gyeongbokgung));
+//        marker.setTag(0);
+//        marker.setMapPoint(MapPoint.mapPointWithGeoCoord(37.577705, 126.977036));
+//        marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
+//        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+//        mMapView.addPOIItem(marker);
     }
 
 
