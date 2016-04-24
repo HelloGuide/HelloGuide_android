@@ -20,8 +20,6 @@ import com.example.androidchoi.helloguide.model.PlaceServerData;
  */
 public class PlaceContentFragment extends Fragment {
 
-    public static final String EXTRA_PLACE_SERVER_DATA = "place_server_data";
-
     TextView mTextName;
     TextView mTextContent;
     ImageView mImagePlace;
@@ -37,7 +35,7 @@ public class PlaceContentFragment extends Fragment {
     */
     public static PlaceContentFragment newInstance(PlaceServerData placeServerData) {
         Bundle args = new Bundle();
-        args.putSerializable(EXTRA_PLACE_SERVER_DATA, placeServerData);
+        args.putSerializable(PlaceInfoActivity.EXTRA_PLACE_SERVER_DATA, placeServerData);
 
         PlaceContentFragment fragment = new PlaceContentFragment();
         fragment.setArguments(args);
@@ -54,7 +52,7 @@ public class PlaceContentFragment extends Fragment {
         mTextContent = (TextView)view.findViewById(R.id.text_place_content);
         mImagePlace = (ImageView)view.findViewById(R.id.image_place);
 
-        mPlaceServerData = (PlaceServerData)getArguments().getSerializable(EXTRA_PLACE_SERVER_DATA);
+        mPlaceServerData = (PlaceServerData)getArguments().getSerializable(PlaceInfoActivity.EXTRA_PLACE_SERVER_DATA);
         getPlaceDetailInfo();
 
         return view;

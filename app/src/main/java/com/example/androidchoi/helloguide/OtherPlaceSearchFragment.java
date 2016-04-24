@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.androidchoi.helloguide.Adapter.OtherPlaceListAdapter;
+import com.example.androidchoi.helloguide.ViewHolder.OtherPlaceItemViewHolder;
+import com.example.androidchoi.helloguide.model.PlaceServerData;
 
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
@@ -24,9 +26,24 @@ public class OtherPlaceSearchFragment extends Fragment {
     MapView mMapView;
     RecyclerView mRecyclerView;
     OtherPlaceListAdapter mOhterPlaceListAdapter;
+    private PlaceServerData mPlaceServerData;
 
     public OtherPlaceSearchFragment() {
         // Required empty public constructor
+    }
+
+    /*
+    PlaceInfoActivity에서  엑스트라를 가져오지 않고 Fragment에서 직접
+    엑스트라에 대한 데이터를 저장 하기 위한 메소드
+    */
+    public static OtherPlaceSearchFragment newInstance(PlaceServerData placeServerData) {
+        Bundle args = new Bundle();
+        args.putSerializable(PlaceInfoActivity.EXTRA_PLACE_SERVER_DATA, placeServerData);
+
+        OtherPlaceSearchFragment fragment = new OtherPlaceSearchFragment();
+        fragment.setArguments(args);
+
+        return fragment;
     }
 
     @Override
@@ -34,6 +51,8 @@ public class OtherPlaceSearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_other_place_search, container, false);
+
+        mPlaceServerData = (PlaceServerData)getArguments().getSerializable(PlaceInfoActivity.EXTRA_PLACE_SERVER_DATA);
 
         // daum map 생성
         mMapView = new MapView(getActivity());
@@ -54,18 +73,33 @@ public class OtherPlaceSearchFragment extends Fragment {
         // List<PlaceServerData> placeList = new ArrayList<>();
 
         // 샘플 아이템 생성
-        mOhterPlaceListAdapter.addItems(new String("근정전"));
-        mOhterPlaceListAdapter.addItems(new String("경회루"));
-        mOhterPlaceListAdapter.addItems(new String("자경전"));
-        mOhterPlaceListAdapter.addItems(new String("십장생 굴뚝"));
-        mOhterPlaceListAdapter.addItems(new String("아미산 굴뚝"));
-        mOhterPlaceListAdapter.addItems(new String("근정문 및 행각"));
-        mOhterPlaceListAdapter.addItems(new String("풍기대"));
-        mOhterPlaceListAdapter.addItems(new String("사정전"));
-        mOhterPlaceListAdapter.addItems(new String("수정전"));
-        mOhterPlaceListAdapter.addItems(new String("향원정"));
-        mOhterPlaceListAdapter.addItems(new String("육상궁"));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("근정전", "근정전", "", "11",  "02230000", "11"));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("경회루", "경회루", "", "11",  "02240000", "11"));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("자경전", "자경전", "", "12",  "08090000", "11"));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("십장생 굴뚝", "십장생 굴뚝", "", "12",  "08100000", "11"));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("아미산 굴뚝", "아미산 굴뚝", "", "12",  "08110000", "11"));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("근정문 및 행각", "근정문 및 행각", "", "12",  "08120000", "11"));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("풍기대", "풍기대", "", "12",  "08470000", "11"));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("사정전", "사정전", "", "12",  "17590000", "11"));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("수정전", "수정전", "", "12",  "17600000", "11"));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("향원정", "향원정", "", "12",  "17610000", "11"));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("육상궁", "육상궁", "", "13",  "01490000", "11"));
+
+        // 아이템 클릭 이벤트 설정
+        mOhterPlaceListAdapter.setOnItemClickListener(new OtherPlaceItemViewHolder.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                // 1. 지도 경로 출력
+                // 2. 선택 위치 정보 서버에 전달
+            }
+        });
+
         return view;
+    }
+
+    // 지도에 경로 출력 method
+    public void showRoute(){
+
     }
 
     // map 설정 변경 method
@@ -90,7 +124,6 @@ public class OtherPlaceSearchFragment extends Fragment {
         marker.setMapPoint(MapPoint.mapPointWithGeoCoord(37.577705, 126.977036));
         marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
         marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-
         mMapView.addPOIItem(marker);
     }
 

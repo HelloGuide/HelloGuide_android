@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.androidchoi.helloguide.R;
+import com.example.androidchoi.helloguide.model.PlaceServerData;
 
 public class OtherPlaceItemViewHolder extends RecyclerView.ViewHolder {
 
@@ -35,7 +36,7 @@ public class OtherPlaceItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     // View 세팅 메소드
-    public void setItems(String placeName){
-        mTextOtherPlaceName.setText(placeName);
+    public void setItems(PlaceServerData placeServerData){
+        mTextOtherPlaceName.setText(placeServerData.getName());
     }
 }

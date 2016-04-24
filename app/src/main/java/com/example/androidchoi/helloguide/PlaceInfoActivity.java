@@ -15,6 +15,7 @@ import com.example.androidchoi.helloguide.model.PlaceServerData;
 public class PlaceInfoActivity extends AppCompatActivity {
 
     public static final String PLACEDATA = "placeData";
+    public static final String EXTRA_PLACE_SERVER_DATA = "place_server_data";
 
     PlaceInfoPagerAdapter mPlaceInfoPagerAdapter;
     ViewPager mViewPager;
@@ -43,17 +44,13 @@ public class PlaceInfoActivity extends AppCompatActivity {
         // 탭 설정
         mPlaceInfoPagerAdapter = new PlaceInfoPagerAdapter(getSupportFragmentManager());
         mPlaceInfoPagerAdapter.addFragment(PlaceContentFragment.newInstance(placeServerData));
-        mPlaceInfoPagerAdapter.addFragment(new OtherPlaceSearchFragment());
+        mPlaceInfoPagerAdapter.addFragment(OtherPlaceSearchFragment.newInstance(placeServerData));
         mPlaceInfoPagerAdapter.setTabList(new String[]{getString(R.string.place_info), getString(R.string.place_search)}); // 탭 이름 설정
         // 뷰페이저 설정
         mViewPager = (ViewPager)findViewById(R.id.view_pager);
         mViewPager.setAdapter(mPlaceInfoPagerAdapter);
         mTabLayout = (TabLayout)findViewById(R.id.sliding_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
-    }
-
-    public PlaceServerData getPlaceServerData() {
-        return placeServerData;
     }
 
     @Override

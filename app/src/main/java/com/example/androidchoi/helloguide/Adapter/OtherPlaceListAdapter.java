@@ -7,13 +7,14 @@ import android.view.ViewGroup;
 
 import com.example.androidchoi.helloguide.R;
 import com.example.androidchoi.helloguide.ViewHolder.OtherPlaceItemViewHolder;
+import com.example.androidchoi.helloguide.model.PlaceServerData;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class OtherPlaceListAdapter extends RecyclerView.Adapter<OtherPlaceItemViewHolder> {
 
-    List<String> mItems = new ArrayList<>();
+    List<PlaceServerData> mItems = new ArrayList<>();
 
     OtherPlaceItemViewHolder.OnItemClickListener mItemClickListener;
     public void setOnItemClickListener(OtherPlaceItemViewHolder.OnItemClickListener listener) {
@@ -21,18 +22,18 @@ public class OtherPlaceListAdapter extends RecyclerView.Adapter<OtherPlaceItemVi
     }
 
     // PlaceData get 메소드
-    public String getItem(int position){
+    public PlaceServerData getItem(int position){
         return mItems.get(position);
     }
 
     // PlaceItem 개별 추가 메소드 (Sample Data용)
-    public void addItems(String placeName){
-        mItems.add(placeName);
+    public void addItems(PlaceServerData placeServerData){
+        mItems.add(placeServerData);
         notifyDataSetChanged();
     }
 
     // PlaceList item 추가 메소드
-    public void setItems(List<String> items){
+    public void setItems(List<PlaceServerData> items){
         mItems = items;
         notifyDataSetChanged();
     }
