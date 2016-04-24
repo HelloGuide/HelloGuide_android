@@ -13,6 +13,7 @@ import com.example.androidchoi.helloguide.Adapter.OtherPlaceListAdapter;
 import com.example.androidchoi.helloguide.ViewHolder.OtherPlaceItemViewHolder;
 import com.example.androidchoi.helloguide.model.PlaceServerData;
 
+import net.daum.mf.map.api.CameraUpdateFactory;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapPolyline;
@@ -60,8 +61,8 @@ public class OtherPlaceSearchFragment extends Fragment {
         mMapView.setDaumMapApiKey(getString(R.string.API_KEY));
         ViewGroup mapViewContainer = (ViewGroup) view.findViewById(R.id.map_view);
         mapViewContainer.addView(mMapView);
-        settingMapView();
-        settingStartMarker(); // 출발지 마커 표시
+        settingMapView(mPlaceServerData.getLatitude(), mPlaceServerData.getLongitude());
+        settingStartMarker(mPlaceServerData.getLatitude(), mPlaceServerData.getLongitude()); // 출발지 마커 표시
 
         // Setting RecyclerView, PlaceListAdapter
         mRecyclerView = (RecyclerView)view.findViewById(R.id.recylerView_other_place_list);
@@ -74,24 +75,25 @@ public class OtherPlaceSearchFragment extends Fragment {
         // List<PlaceServerData> placeList = new ArrayList<>();
 
         // 샘플 아이템 생성
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("근정전", "근정전", "", "11",  "02230000", "11"));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("경회루", "경회루", "", "11",  "02240000", "11"));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("자경전", "자경전", "", "12",  "08090000", "11"));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("십장생 굴뚝", "십장생 굴뚝", "", "12",  "08100000", "11"));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("아미산 굴뚝", "아미산 굴뚝", "", "12",  "08110000", "11"));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("근정문 및 행각", "근정문 및 행각", "", "12",  "08120000", "11"));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("풍기대", "풍기대", "", "12",  "08470000", "11"));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("사정전", "사정전", "", "12",  "17590000", "11"));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("수정전", "수정전", "", "12",  "17600000", "11"));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("향원정", "향원정", "", "12",  "17610000", "11"));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("육상궁", "육상궁", "", "13",  "01490000", "11"));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("근정전", "근정전", "", "11", "02230000", "11", 37.578575, 126.977013));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("경회루", "경회루", "", "11", "02240000", "11", 37.579773, 126.976051));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("자경전", "자경전", "", "12", "08090000", "11", 37.580299, 126.978096));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("십장생 굴뚝", "십장생 굴뚝", "", "12", "08100000", "11", 37.580566, 126.978195));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("아미산 굴뚝", "아미산 굴뚝", "", "12", "08110000", "11", 37.580238, 126.976964));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("근정문 및 행각", "근정문 및 행각", "", "12", "08120000", "11", 37.577736, 126.976967));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("풍기대", "풍기대", "", "12", "08470000", "11", 37.580799, 126.976997));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("사정전", "사정전", "", "12", "17590000", "11", 37.579109, 126.977043));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("수정전", "수정전", "", "12", "17600000", "11", 37.578999, 126.975952));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("향원정", "향원정", "", "12", "17610000", "11", 37.582371, 126.977051));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("육상궁", "육상궁", "", "13", "01490000", "11", 37.585438, 126.973503));
 
         // 아이템 클릭 이벤트 설정
         mOhterPlaceListAdapter.setOnItemClickListener(new OtherPlaceItemViewHolder.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 // 1. 지도 경로 출력
-                showRoute();
+                PlaceServerData placeServerData = mOhterPlaceListAdapter.getItem(position);
+                showRoute(placeServerData.getLatitude(), placeServerData.getLongitude());
                 // 2. 선택 위치 정보 서버에 전달
             }
         });
@@ -100,7 +102,7 @@ public class OtherPlaceSearchFragment extends Fragment {
     }
 
     // 지도에 경로 출력 method
-    public void showRoute(){
+    public void showRoute(double lat, double lng){
 
         MapPOIItem existingPOIItemEnd = mMapView.findPOIItemByTag(1002);
         if (existingPOIItemEnd != null) {
@@ -114,7 +116,7 @@ public class OtherPlaceSearchFragment extends Fragment {
         MapPOIItem poiItemEnd = new MapPOIItem();
         poiItemEnd.setItemName("End");
         poiItemEnd.setTag(1002);
-        poiItemEnd.setMapPoint(MapPoint.mapPointWithGeoCoord(37.578575, 126.977036));
+        poiItemEnd.setMapPoint(MapPoint.mapPointWithGeoCoord(lat, lng));
         poiItemEnd.setMarkerType(MapPOIItem.MarkerType.CustomImage);
         poiItemEnd.setShowAnimationType(MapPOIItem.ShowAnimationType.SpringFromGround);
         poiItemEnd.setShowCalloutBalloonOnTouch(false);
@@ -131,15 +133,16 @@ public class OtherPlaceSearchFragment extends Fragment {
 //        MapPointBounds mapPointBounds = new MapPointBounds(mPolyline2Points);
 //        int padding = 200; // px
 //        mMapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
-
+        mMapView.moveCamera(CameraUpdateFactory.newMapPoint(MapPoint.mapPointWithGeoCoord((mPlaceServerData.getLatitude()+lat)/2, (mPlaceServerData.getLongitude()+lng)/2)));
+        mMapView.setZoomLevel(1, true);
     }
 
     // map 설정 변경 method
-    public void settingMapView() {
+    public void settingMapView(double lat, double lng) {
         // 중심점 변경
-        mMapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.579617, 126.977448), true);
+        mMapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(lat, lng), true);
         // 줌 레벨 변경
-        mMapView.setZoomLevel(2, true);
+        mMapView.setZoomLevel(-3, true);
         // 중심점 변경 + 줌 레벨 변경
         // mMapView.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(33.41, 126.52), 9, true);
         // 줌 인
@@ -149,12 +152,12 @@ public class OtherPlaceSearchFragment extends Fragment {
     }
 
     // map start marker 설정 method
-    public void settingStartMarker(){
+    public void settingStartMarker(double lat, double lng){
 
         MapPOIItem poiItemStart = new MapPOIItem();
         poiItemStart.setItemName("Start");
         poiItemStart.setTag(1001);
-        poiItemStart.setMapPoint(MapPoint.mapPointWithGeoCoord(37.579769,126.976036));
+        poiItemStart.setMapPoint(MapPoint.mapPointWithGeoCoord(lat,lng));
         poiItemStart.setMarkerType(MapPOIItem.MarkerType.CustomImage);
         poiItemStart.setShowAnimationType(MapPOIItem.ShowAnimationType.SpringFromGround);
         poiItemStart.setShowCalloutBalloonOnTouch(false);

@@ -19,16 +19,21 @@ public class PlaceServerData implements Serializable { // 인텐트 전달을 �
     private String ccbaKdcd; // 종목코드
     private String ccbaAsno; // 지정번호
     private String ccbaCtcd; // 시도코드
+    private double latitude; // 위도
+    private double longitude; // 경도
 
     // 샘플 Data 생성을 위한 생성자
     public PlaceServerData(String name, String content, String url,
-                           String code1, String code2, String code3){
+                           String code1, String code2, String code3,
+                           double lat, double lng){
         mName = name;
         mSimpleContent = content;
         mImageUrl = url;
         ccbaKdcd = code1;
         ccbaAsno = code2;
         ccbaCtcd = code3;
+        latitude = lat;
+        longitude = lng;
     }
 
     public String getName() {
@@ -54,4 +59,8 @@ public class PlaceServerData implements Serializable { // 인텐트 전달을 �
     public String getCcbaCtcd() {
         return ccbaCtcd;
     }
+
+    public double getLatitude() { return latitude; }
+
+    public double getLongitude() { return longitude; }
 }
