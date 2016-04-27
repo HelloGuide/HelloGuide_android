@@ -91,10 +91,7 @@ public class OtherPlaceSearchFragment extends Fragment {
         mOhterPlaceListAdapter.setOnItemClickListener(new OtherPlaceItemViewHolder.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                // 1. 지도 경로 출력
-                PlaceServerData placeServerData = mOhterPlaceListAdapter.getItem(position);
-                showRoute(placeServerData.getLatitude(), placeServerData.getLongitude());
-                // 2. 선택 위치 정보 서버에 전달
+                showSearchDialog(position);
             }
         });
 
@@ -174,5 +171,28 @@ public class OtherPlaceSearchFragment extends Fragment {
 //        mMapView.addPOIItem(marker);
     }
 
+    // 위치 선택시 다이얼로그 생성 메소드
+    public void showSearchDialog(final int position) {
+        final SearchDialogFragment dialog = new SearchDialogFragment();
+        dialog.show(getActivity().getSupportFragmentManager(), "dialog");
+        SearchDialogFragment.ButtonEventListener listener = new SearchDialogFragment.ButtonEventListener() {
+            @Override
+            public void onYesEvent() {
+                // 1. 지도 경로 출력
+                PlaceServerData placeServerData = mOhterPlaceListAdapter.getItem(position);
+                showRoute(placeServerData.getLatitude(), placeServerData.getLongitude());
+                // 2. 선택 위치 정보 서버에 전달
 
+                // 다이얼로그 종료
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onNoEvent() {
+                // 다이얼로그 종료
+                dialog.dismiss();
+            }
+        };
+        dialog.setButtonEventListener(listener);
+    }
 }

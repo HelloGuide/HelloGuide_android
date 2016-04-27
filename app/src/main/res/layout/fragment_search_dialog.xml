@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/background_custom_alert_dialog"
+              android:orientation="vertical"
+              android:paddingBottom="@dimen/dimen_small_default"
+              android:paddingLeft="@dimen/dimen_default"
+              android:paddingRight="@dimen/dimen_default"
+              android:paddingTop="@dimen/dimen_default">
+
+    <TextView
+        android:id="@+id/text_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="New Text"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/large_font_size"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:id="@+id/text_dialog_sub_title"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@+id/text_dialog_title"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="New Text"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/default_font_size"
+        android:layout_gravity="center|top"
+        android:layout_marginTop="@dimen/dimen_small_default"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@+id/text_dialog_sub_title"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dimen_small_default"
+        android:layout_weight="2">
+
+        <Button
+            android:id="@+id/btn_dialog_yes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dimen_small_default"
+            android:layout_marginRight="@dimen/dimen_large_default"
+            android:layout_weight="1"
+            android:background="@drawable/selector_button_dialog"
+            android:text="YES"
+            android:textSize="@dimen/large_font_size"
+            />
+
+        <Button
+            android:id="@+id/btn_dialog_no"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dimen_large_default"
+            android:layout_marginRight="@dimen/dimen_small_default"
+            android:layout_weight="1"
+            android:background="@drawable/selector_button_dialog"
+            android:text="NO"
+            android:textSize="@dimen/large_font_size"
+            />
+    </LinearLayout>
+
+</LinearLayout>

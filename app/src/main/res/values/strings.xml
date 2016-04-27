@@ -5,5 +5,10 @@
     <string name="place_search">위치 검색</string>
     <string name="gyeongbokgung">경복궁</string>
 
+    <string name="search_dialog_title">경로 탐색</string>
+    <string name="search_dialog_sub_title">경로를 탐색하시겠습니까?</string>
+    <string name="search_dialog_yes">탐색</string>
+    <string name="search_dialog_cancel">취소</string>
+
     <string name="API_KEY">848629993aa13298a1e4ddeb254e716d</string>
 </resources>
