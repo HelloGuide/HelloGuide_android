@@ -1,5 +1,7 @@
 package com.example.androidchoi.helloguide.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -13,13 +15,17 @@ import java.io.Serializable;
 */
 public class PlaceServerData implements Serializable { // 인텐트 전달을 위해 Serializable 인터페이스 구현
 
+    @SerializedName("name")
     private String mName;
+    @SerializedName("simpleContent")
     private String mSimpleContent; // 간략 정보
     private String mImageUrl;
     private String ccbaKdcd; // 종목코드
     private String ccbaAsno; // 지정번호
     private String ccbaCtcd; // 시도코드
+    @SerializedName("lat")
     private double latitude; // 위도
+    @SerializedName("lng")
     private double longitude; // 경도
 
     // 샘플 Data 생성을 위한 생성자
