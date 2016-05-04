@@ -40,14 +40,13 @@
         <ToggleButton
             android:layout_width="40dp"
             android:layout_height="20dp"
-            android:id="@+id/toggleButton_auto_login"
+            android:id="@+id/toggleButton"
             android:textOn=""
             android:textOff=""
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="false"
             android:layout_marginRight="@dimen/dimen_default"
-            android:checked="true"
             android:background="@drawable/selector_toggle"/>
     </RelativeLayout>
 
