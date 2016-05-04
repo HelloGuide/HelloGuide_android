@@ -30,5 +30,6 @@
         <activity android:name=".PlaceInfoActivity" >
         </activity>
         <service android:name="com.perples.recosdk.RECOBeaconService" />
+        <service android:name=".RecoBackgroundMonitoringService" />
     </application>
 </manifest>
