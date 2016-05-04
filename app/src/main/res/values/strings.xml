@@ -11,4 +11,6 @@
     <string name="search_dialog_cancel">취소</string>
 
     <string name="API_KEY">848629993aa13298a1e4ddeb254e716d</string>
+
+    <string name="action_setting">Setting</string>
 </resources>
