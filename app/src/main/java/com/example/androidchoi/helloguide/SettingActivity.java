@@ -8,6 +8,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
@@ -55,6 +56,15 @@ public class SettingActivity extends AppCompatActivity {
         if(this.isBackgroundMonitoringServiceRunning(this)) {
             mToggleButton.setChecked(true);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+        }
+        return true;
     }
 
     private boolean isBackgroundMonitoringServiceRunning(Context context) {

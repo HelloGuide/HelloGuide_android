@@ -35,7 +35,9 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.example.androidchoi.helloguide.MainActivity;
+import com.example.androidchoi.helloguide.PlaceInfoActivity;
 import com.example.androidchoi.helloguide.R;
+import com.example.androidchoi.helloguide.model.PlaceServerData;
 import com.perples.recosdk.RECOBeacon;
 import com.perples.recosdk.RECOBeaconManager;
 import com.perples.recosdk.RECOBeaconRegion;
@@ -47,7 +49,10 @@ import com.perples.recosdk.RECOServiceConnectListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -60,6 +65,7 @@ public class RecoBackgroundMonitoringService extends Service implements RECOMoni
      * We recommend 1 second for scanning, 10 seconds interval between scanning, and 60 seconds for region expiration time.
      * 1초 스캔, 10초 간격으로 스캔, 60초의 region expiration time은 당사 권장사항입니다.
      */
+    public static String NOTIFICATION_EXTRA = "notification_extra";
     private long mScanDuration = 1*1000L;
     private long mSleepDuration = 10*1000L;
     private long mRegionExpirationTime = 60*1000L;
@@ -198,10 +204,42 @@ public class RecoBackgroundMonitoringService extends Service implements RECOMoni
          * didDetermineStateForRegion() 콜백 메소드를 통해 region 상태를 확인할 수 있습니다.
          */
 
+        List<RECOBeacon> list = new ArrayList<RECOBeacon>(beacons);
+        Collections.sort(list, new NameAscCompare());
+        RECOBeacon recoBeacon = (RECOBeacon)beacons.toArray()[0];
+
+        int majorCode = recoBeacon.getMajor();
+        int minorCode = recoBeacon.getMinor();
+
         //Get the region and found beacon list in the entered region
-        Log.i("BackMonitoringService", "didEnterRegion() - " + region.getUniqueIdentifier());
-        this.popupNotification("Inside of " + region.getUniqueIdentifier());
+        Log.i("BackMonitoringService", majorCode + "/" + minorCode);
+
+        PlaceServerData placeServerData;
+        String beconCode = majorCode + "" + minorCode;
+        switch (majorCode + "" + minorCode){
+            case "50119855":
+                //placeServerData = new PlaceServerData("경회루", "경회루", "", "11", "02240000", "11", 37.579773, 126.976051);
+                placeServerData = new PlaceServerData("자경전", "자경전", "", "12",  "08090000", "11", 37.580299, 126.978096);
+                break;
+            default:
+                placeServerData = new PlaceServerData(
+                        "근정전", "근정전", "", "11", "02230000", "11", 37.578575, 126.977013);
+        }
+        this.popupNotification(placeServerData);
         //Write the code when the device is enter the region
+    }
+
+    static class NameAscCompare implements Comparator<RECOBeacon> {
+
+        /**
+         * 오름차순(ASC)
+         */
+        @Override
+        public int compare(RECOBeacon arg0, RECOBeacon arg1) {
+            // TODO Auto-generated method stub
+            return Double.compare(arg0.getAccuracy(), arg1.getAccuracy());
+        }
+
     }
 
     @Override
@@ -225,7 +263,7 @@ public class RecoBackgroundMonitoringService extends Service implements RECOMoni
         //Write the code when starting monitoring the region is started successfully
     }
 
-    private void popupNotification(String msg) {
+    private void popupNotification(PlaceServerData placeServerData) {
         Log.i("BackMonitoringService", "popupNotification()");
         String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.KOREA).format(new Date());
         NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -233,18 +271,19 @@ public class RecoBackgroundMonitoringService extends Service implements RECOMoni
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
                 .setColor(getResources().getColor(R.color.colorPrimary))
-                .setContentTitle(msg + " " + currentTime)
-                .setContentText(msg)
-                .setContentIntent(getPendingIntent());
+                .setContentTitle(placeServerData.getName())
+                .setContentText(placeServerData.getSimpleContent())
+                .setContentIntent(getPendingIntent(placeServerData))
+                .setAutoCancel(true);
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
         builder.setStyle(inboxStyle);
         nm.notify(mNotificationID, builder.build());
         mNotificationID = (mNotificationID - 1) % 1000 + 9000;
     }
 
-    private PendingIntent getPendingIntent(){
-        Intent intent = new Intent(getBaseContext(), MainActivity.class);
-        intent.putExtra("noti_extra", "noti_extra");
+    private PendingIntent getPendingIntent(PlaceServerData placeServerData){
+        Intent intent = new Intent(getBaseContext(), PlaceInfoActivity.class);
+        intent.putExtra(PlaceInfoActivity.PLACEDATA, placeServerData);
         PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), 0, intent, 0);
 
         return pendingIntent;
