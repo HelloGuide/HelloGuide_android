@@ -1,5 +1,8 @@
 package com.example.androidchoi.helloguide;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     */
     public static final boolean DISCONTINUOUS_SCAN = false;
 
+    private static final int REQUEST_ENABLE_BT = 1;
 
     RecyclerView mRecyclerView;
     PlaceListAdapter mPlaceListAdapter;
@@ -39,6 +43,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //사용자가 블루투스를 켜도록 요청.
+        BluetoothManager mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+        BluetoothAdapter mBluetoothAdapter = mBluetoothManager.getAdapter();
+
+        if(mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
+            Intent enableBTIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBTIntent, REQUEST_ENABLE_BT);
+        }
 
         // Setting Toolbar
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);

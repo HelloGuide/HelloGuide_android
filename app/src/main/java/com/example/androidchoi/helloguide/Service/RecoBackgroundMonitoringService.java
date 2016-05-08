@@ -215,17 +215,19 @@ public class RecoBackgroundMonitoringService extends Service implements RECOMoni
         Log.i("BackMonitoringService", majorCode + "/" + minorCode);
 
         PlaceServerData placeServerData;
+        int notificationID;
         String beconCode = majorCode + "" + minorCode;
         switch (majorCode + "" + minorCode){
             case "50119855":
                 //placeServerData = new PlaceServerData("경회루", "경회루", "", "11", "02240000", "11", 37.579773, 126.976051);
                 placeServerData = new PlaceServerData("자경전", "자경전", "", "12",  "08090000", "11", 37.580299, 126.978096);
+                notificationID = 9999;
                 break;
             default:
-                placeServerData = new PlaceServerData(
-                        "근정전", "근정전", "", "11", "02230000", "11", 37.578575, 126.977013);
+                placeServerData = new PlaceServerData("근정전", "근정전", "", "11", "02230000", "11", 37.578575, 126.977013);
+                notificationID = 9998;
         }
-        this.popupNotification(placeServerData);
+        this.popupNotification(placeServerData, notificationID);
         //Write the code when the device is enter the region
     }
 
@@ -263,7 +265,7 @@ public class RecoBackgroundMonitoringService extends Service implements RECOMoni
         //Write the code when starting monitoring the region is started successfully
     }
 
-    private void popupNotification(PlaceServerData placeServerData) {
+    private void popupNotification(PlaceServerData placeServerData, int notificationID) {
         Log.i("BackMonitoringService", "popupNotification()");
         String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.KOREA).format(new Date());
         NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -277,8 +279,8 @@ public class RecoBackgroundMonitoringService extends Service implements RECOMoni
                 .setAutoCancel(true);
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
         builder.setStyle(inboxStyle);
-        nm.notify(mNotificationID, builder.build());
-        mNotificationID = (mNotificationID - 1) % 1000 + 9000;
+        nm.notify(notificationID, builder.build());
+//        mNotificationID = (mNotificationID - 1) % 1000 + 9000;
     }
 
     private PendingIntent getPendingIntent(PlaceServerData placeServerData){
