@@ -46,14 +46,11 @@ import com.perples.recosdk.RECOErrorCode;
 import com.perples.recosdk.RECOMonitoringListener;
 import com.perples.recosdk.RECOServiceConnectListener;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * RECOBackgroundMonitoringService is to monitor regions in the background.
@@ -203,32 +200,37 @@ public class RecoBackgroundMonitoringService extends Service implements RECOMoni
          * 최초 실행시, 이 콜백 메소드는 호출되지 않습니다.
          * didDetermineStateForRegion() 콜백 메소드를 통해 region 상태를 확인할 수 있습니다.
          */
-
         List<RECOBeacon> list = new ArrayList<RECOBeacon>(beacons);
         Collections.sort(list, new NameAscCompare());
         RECOBeacon recoBeacon = (RECOBeacon)beacons.toArray()[0];
 
-        int majorCode = recoBeacon.getMajor();
-        int minorCode = recoBeacon.getMinor();
-
-        //Get the region and found beacon list in the entered region
-        Log.i("BackMonitoringService", majorCode + "/" + minorCode);
-
+        int majorCode;
+        int minorCode;
         PlaceServerData placeServerData;
         int notificationID;
-        String beconCode = majorCode + "" + minorCode;
-        switch (majorCode + "" + minorCode){
-            case "50119855":
-                //placeServerData = new PlaceServerData("경회루", "경회루", "", "11", "02240000", "11", 37.579773, 126.976051);
-                placeServerData = new PlaceServerData("자경전", "자경전", "", "12",  "08090000", "11", 37.580299, 126.978096);
-                notificationID = 9999;
-                break;
-            default:
-                placeServerData = new PlaceServerData("근정전", "근정전", "", "11", "02230000", "11", 37.578575, 126.977013);
-                notificationID = 9998;
+
+        for(RECOBeacon beacon : beacons){
+            majorCode = recoBeacon.getMajor();
+            minorCode = recoBeacon.getMinor();
+            Log.i("BackMonitoringService", majorCode + "/" + minorCode);
+            switch (majorCode + "" + minorCode){
+                case "50119853":
+                    placeServerData = new PlaceServerData("근정전", "근정전", "", "11", "02230000", "11", 37.578575, 126.977013);
+                    notificationID = 9999;
+                    break;
+                case "50119854":
+                    placeServerData = new PlaceServerData("경회루", "경회루", "", "11", "02240000", "11", 37.579773, 126.976051);
+                    notificationID = 9998;
+                    break;
+                case "50119855":
+                default:
+                    placeServerData = new PlaceServerData("자경전", "자경전", "", "12",  "08090000", "11", 37.580299, 126.978096);
+                    notificationID = 9997;
+                    break;
+            }
+            this.popupNotification(placeServerData, notificationID);
+            //Write the code when the device is enter the region
         }
-        this.popupNotification(placeServerData, notificationID);
-        //Write the code when the device is enter the region
     }
 
     static class NameAscCompare implements Comparator<RECOBeacon> {
@@ -255,7 +257,6 @@ public class RecoBackgroundMonitoringService extends Service implements RECOMoni
          */
 
         Log.i("BackMonitoringService", "didExitRegion() - " + region.getUniqueIdentifier());
-        //this.popupNotification("Outside of " + region.getUniqueIdentifier());
         //Write the code when the device is exit the region
     }
 
@@ -267,7 +268,7 @@ public class RecoBackgroundMonitoringService extends Service implements RECOMoni
 
     private void popupNotification(PlaceServerData placeServerData, int notificationID) {
         Log.i("BackMonitoringService", "popupNotification()");
-        String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.KOREA).format(new Date());
+        PendingIntent pendingIntent = getPendingIntent(placeServerData);
         NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
@@ -275,19 +276,19 @@ public class RecoBackgroundMonitoringService extends Service implements RECOMoni
                 .setColor(getResources().getColor(R.color.colorPrimary))
                 .setContentTitle(placeServerData.getName())
                 .setContentText(placeServerData.getSimpleContent())
-                .setContentIntent(getPendingIntent(placeServerData))
+                .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
         builder.setStyle(inboxStyle);
-        nm.notify(notificationID, builder.build());
+
+        nm.notify(mNotificationID, builder.build());
 //        mNotificationID = (mNotificationID - 1) % 1000 + 9000;
     }
 
     private PendingIntent getPendingIntent(PlaceServerData placeServerData){
         Intent intent = new Intent(getBaseContext(), PlaceInfoActivity.class);
         intent.putExtra(PlaceInfoActivity.PLACEDATA, placeServerData);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), 0, intent, 0);
-
+        PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         return pendingIntent;
     }
 
@@ -308,6 +309,7 @@ public class RecoBackgroundMonitoringService extends Service implements RECOMoni
     public void monitoringDidFailForRegion(RECOBeaconRegion region, RECOErrorCode errorCode) {
         //Write the code when the RECOBeaconService is failed to monitor the region.
         //See the RECOErrorCode in the documents.
+        Log.i("BackMonitoringService", errorCode.toString());
         return;
     }
 }

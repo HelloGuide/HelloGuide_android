@@ -30,7 +30,6 @@ public class PlaceInfoActivity extends AppCompatActivity {
         // 이전 activity에서 전달된 intent
         Intent intent = getIntent();
         placeServerData = (PlaceServerData)intent.getSerializableExtra(PLACEDATA);
-
         // Setting Toolbar
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         // 해당 위치 이름으로 toolbar title 변경
@@ -51,6 +50,11 @@ public class PlaceInfoActivity extends AppCompatActivity {
         mViewPager.setAdapter(mPlaceInfoPagerAdapter);
         mTabLayout = (TabLayout)findViewById(R.id.sliding_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
