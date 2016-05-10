@@ -92,6 +92,8 @@ public class RecoBackgroundMonitoringService extends Service implements RECOMoni
          * 주의: enableRangingTimeout을 false로 설정 시, 배터리 소모량이 증가합니다.
          */
         mRecoManager = RECOBeaconManager.getInstance(getApplicationContext(), MainActivity.SCAN_RECO_ONLY, MainActivity.ENABLE_BACKGROUND_RANGING_TIMEOUT);
+        mRecoManager.setDiscontinuousScan(MainActivity.DISCONTINUOUS_SCAN);
+
         this.bindRECOService();
         //this should be set to run in the background.
         //background에서 동작하기 위해서는 반드시 실행되어야 합니다.
@@ -200,35 +202,43 @@ public class RecoBackgroundMonitoringService extends Service implements RECOMoni
          * 최초 실행시, 이 콜백 메소드는 호출되지 않습니다.
          * didDetermineStateForRegion() 콜백 메소드를 통해 region 상태를 확인할 수 있습니다.
          */
-        List<RECOBeacon> list = new ArrayList<RECOBeacon>(beacons);
-        Collections.sort(list, new NameAscCompare());
-        RECOBeacon recoBeacon = (RECOBeacon)beacons.toArray()[0];
+        List<RECOBeacon> beaconList = new ArrayList<RECOBeacon>(beacons);
+        Collections.sort(beaconList, new NameAscCompare());
+        boolean isNear = false;
 
         int majorCode;
         int minorCode;
         PlaceServerData placeServerData;
         int notificationID;
 
-        for(RECOBeacon beacon : beacons){
-            majorCode = recoBeacon.getMajor();
-            minorCode = recoBeacon.getMinor();
+        for(RECOBeacon beacon : beaconList){
+            majorCode = beacon.getMajor();
+            minorCode = beacon.getMinor();
             Log.i("BackMonitoringService", majorCode + "/" + minorCode);
             switch (majorCode + "" + minorCode){
                 case "50119853":
                     placeServerData = new PlaceServerData("근정전", "근정전", "", "11", "02230000", "11", 37.578575, 126.977013);
                     notificationID = 9999;
+                    if(beacon.getAccuracy() < 2) isNear = true;
                     break;
                 case "50119854":
                     placeServerData = new PlaceServerData("경회루", "경회루", "", "11", "02240000", "11", 37.579773, 126.976051);
                     notificationID = 9998;
+                    Log.i("proximity" , beacon.getAccuracy()+"");
+                    if(beacon.getAccuracy() < 2) isNear = true;
                     break;
                 case "50119855":
                 default:
                     placeServerData = new PlaceServerData("자경전", "자경전", "", "12",  "08090000", "11", 37.580299, 126.978096);
                     notificationID = 9997;
+                    Log.i("proximity" , beacon.getAccuracy()+"");
+                    if(beacon.getAccuracy() < 2) isNear = true;
                     break;
             }
-            this.popupNotification(placeServerData, notificationID);
+            if(isNear) {
+                this.popupNotification(placeServerData, notificationID);
+                isNear = false;
+            }
             //Write the code when the device is enter the region
         }
     }
