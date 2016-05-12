@@ -31,7 +31,8 @@ public class SettingActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         // home 버튼 설정
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon_back);
+        getSupportActionBar()
+                .setHomeAsUpIndicator(R.drawable.icon_back);
 
         // Beacon Background Monitoring 설정을 위한 ToggleButton
         mToggleButton = (ToggleButton)findViewById(R.id.toggleButton);

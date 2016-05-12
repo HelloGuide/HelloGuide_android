@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.example.androidchoi.helloguide.Manager.MyApplication;
 import com.example.androidchoi.helloguide.R;
 import com.example.androidchoi.helloguide.model.PlaceServerData;
 
@@ -43,6 +45,13 @@ public class PlaceItemViewHolder extends RecyclerView.ViewHolder {
     public void setItems(PlaceServerData placeServerData){
         mTextPlaceName.setText(placeServerData.getName());
         mTextPlaceContent.setText(placeServerData.getSimpleContent());
+        Glide.with(MyApplication.getContext())
+                .load(placeServerData.getImageUrl())
+                .override(320, 240)
+                .centerCrop()
+                .placeholder(R.drawable.image_place_default)
+                .thumbnail(0.3f)
+                .into(mImagePlace);
 //        mImagePlace.setImageResource(placeData.getImageReSources());
     }
 }

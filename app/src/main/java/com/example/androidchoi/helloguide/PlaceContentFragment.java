@@ -84,7 +84,5 @@ public class PlaceContentFragment extends Fragment {
                 .placeholder(R.drawable.image_place_default)
                 .thumbnail(0.3f)
                 .into(mImagePlace);
-
-
     }
 }

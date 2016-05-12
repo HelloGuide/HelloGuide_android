@@ -1,6 +1,7 @@
 package com.example.androidchoi.helloguide;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -29,6 +30,9 @@ public class OtherPlaceSearchFragment extends Fragment {
     RecyclerView mRecyclerView;
     OtherPlaceListAdapter mOhterPlaceListAdapter;
     private PlaceServerData mPlaceServerData;
+    private MapPoint[] mPolyline_1;
+    private MapPoint[] mPolyline_2;
+    private MapPoint[] mPolyline_3;
 
     public OtherPlaceSearchFragment() {
         // Required empty public constructor
@@ -74,18 +78,55 @@ public class OtherPlaceSearchFragment extends Fragment {
         // Listing Places
         // List<PlaceServerData> placeList = new ArrayList<>();
 
+        mPolyline_1 = new MapPoint[]{
+                MapPoint.mapPointWithGeoCoord(37.579773, 126.976051),
+                MapPoint.mapPointWithGeoCoord(37.579773, 126.976395),
+                MapPoint.mapPointWithGeoCoord(37.579891, 126.976395),
+                MapPoint.mapPointWithGeoCoord(37.579891, 126.976768),
+                MapPoint.mapPointWithGeoCoord(37.580063, 126.976768),
+                MapPoint.mapPointWithGeoCoord(37.580090, 126.977776),
+                MapPoint.mapPointWithGeoCoord(37.580227, 126.977776),
+                MapPoint.mapPointWithGeoCoord(37.580227, 126.978096),
+                MapPoint.mapPointWithGeoCoord(37.580299, 126.978096)
+        };
+
+        mPolyline_2 = new MapPoint[]{
+                MapPoint.mapPointWithGeoCoord(37.578575, 126.977013),
+                MapPoint.mapPointWithGeoCoord(37.578970, 126.977028),
+                MapPoint.mapPointWithGeoCoord(37.578967, 126.977257),
+                MapPoint.mapPointWithGeoCoord(37.579182, 126.977257),
+                MapPoint.mapPointWithGeoCoord(37.579161, 126.977690),
+                MapPoint.mapPointWithGeoCoord(37.579723, 126.977725),
+                MapPoint.mapPointWithGeoCoord(37.579723, 126.977486),
+                MapPoint.mapPointWithGeoCoord(37.580093, 126.977509),
+                MapPoint.mapPointWithGeoCoord(37.580097, 126.977768),
+                MapPoint.mapPointWithGeoCoord(37.580215, 126.977768),
+                MapPoint.mapPointWithGeoCoord(37.580215, 126.978090),
+                MapPoint.mapPointWithGeoCoord(37.580299, 126.978096)
+        };
+
+        mPolyline_3 = new MapPoint[]{
+                MapPoint.mapPointWithGeoCoord(37.578575, 126.977013),
+                MapPoint.mapPointWithGeoCoord(37.578964, 126.977028),
+                MapPoint.mapPointWithGeoCoord(37.578979, 126.976547),
+                MapPoint.mapPointWithGeoCoord(37.579212, 126.976555),
+                MapPoint.mapPointWithGeoCoord(37.579212, 126.976364),
+                MapPoint.mapPointWithGeoCoord(37.579778, 126.976395),
+                MapPoint.mapPointWithGeoCoord(37.579773, 126.976051)
+        };
+
         // 샘플 아이템 생성
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("근정전", "근정전", "", "11", "02230000", "11", 37.578575, 126.977013));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("경회루", "경회루", "", "11", "02240000", "11", 37.579773, 126.976051));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("자경전", "자경전", "", "12", "08090000", "11", 37.580299, 126.978096));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("십장생 굴뚝", "십장생 굴뚝", "", "12", "08100000", "11", 37.580566, 126.978195));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("아미산 굴뚝", "아미산 굴뚝", "", "12", "08110000", "11", 37.580238, 126.976964));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("근정문 및 행각", "근정문 및 행각", "", "12", "08120000", "11", 37.577736, 126.976967));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("풍기대", "풍기대", "", "12", "08470000", "11", 37.580799, 126.976997));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("사정전", "사정전", "", "12", "17590000", "11", 37.579109, 126.977043));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("수정전", "수정전", "", "12", "17600000", "11", 37.578999, 126.975952));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("향원정", "향원정", "", "12", "17610000", "11", 37.582371, 126.977051));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("육상궁", "육상궁", "", "13", "01490000", "11", 37.585438, 126.973503));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("근정전", "근정전", "http://www.cha.go.kr/unisearch/images/national_treasure/1611701.jpg", "11", "02230000", "11", 37.578575, 126.977013));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("경회루", "경회루", "http://www.cha.go.kr/unisearch/images/national_treasure/1611724.jpg", "11", "02240000", "11", 37.579773, 126.976051));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("자경전", "자경전", "http://www.cha.go.kr/unisearch/images/treasure/1613927.jpg", "12", "08090000", "11", 37.580299, 126.978096));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("십장생 굴뚝", "십장생 굴뚝", "http://www.cha.go.kr/unisearch/images/treasure/1613945.jpg", "12", "08100000", "11", 37.580566, 126.978195));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("아미산 굴뚝", "아미산 굴뚝", "http://www.cha.go.kr/unisearch/images/treasure/1613958.jpg", "12", "08110000", "11", 37.580238, 126.976964));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("근정문 및 행각", "근정문 및 행각", "http://www.cha.go.kr/unisearch/images/treasure/1613973.jpg", "12", "08120000", "11", 37.577736, 126.976967));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("풍기대", "풍기대", "http://www.cha.go.kr/unisearch/images/treasure/1614087.jpg", "12", "08470000", "11", 37.580799, 126.976997));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("사정전", "사정전", "http://www.cha.go.kr/unisearch/images/treasure/2283192.jpg", "12", "17590000", "11", 37.579109, 126.977043));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("수정전", "수정전", "http://www.cha.go.kr/unisearch/images/treasure/2281864.jpg", "12", "17600000", "11", 37.578999, 126.975952));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("향원정", "향원정", "http://www.cha.go.kr/unisearch/images/treasure/2281891.jpg", "12", "17610000", "11", 37.582371, 126.977051));
+        mOhterPlaceListAdapter.addItems(new PlaceServerData("육상궁", "육상궁", "http://www.cha.go.kr/unisearch/images/history_site/1624577.jpg", "13", "01490000", "11", 37.585438, 126.973503));
 
         // 아이템 클릭 이벤트 설정
         mOhterPlaceListAdapter.setOnItemClickListener(new OtherPlaceItemViewHolder.OnItemClickListener() {
@@ -99,7 +140,7 @@ public class OtherPlaceSearchFragment extends Fragment {
     }
 
     // 지도에 경로 출력 method
-    public void showRoute(double lat, double lng){
+    public void showRoute(String name, double lat, double lng){
 
         MapPOIItem existingPOIItemEnd = mMapView.findPOIItemByTag(1002);
         if (existingPOIItemEnd != null) {
@@ -118,20 +159,45 @@ public class OtherPlaceSearchFragment extends Fragment {
         poiItemEnd.setShowAnimationType(MapPOIItem.ShowAnimationType.SpringFromGround);
         poiItemEnd.setShowCalloutBalloonOnTouch(false);
         poiItemEnd.setCustomImageResourceId(R.drawable.image_marker_end);
-        poiItemEnd.setCustomImageAnchorPointOffset(new MapPOIItem.ImageOffset(29, 2));
+        poiItemEnd.setCustomImageAnchorPointOffset(new MapPOIItem.ImageOffset(20, 4));
         mMapView.addPOIItem(poiItemEnd);
 
-//        MapPolyline polyline2 = new MapPolyline(21);
-//        polyline2.setTag(2000);
-//        polyline2.setLineColor(Color.argb(128, 0, 0, 255));
-//        polyline2.addPoints(mPolyline2Points);
-//        mMapView.addPolyline(polyline2);
-//
-//        MapPointBounds mapPointBounds = new MapPointBounds(mPolyline2Points);
+        if(mPlaceServerData.getName().equals("경회루")){
+            if(name.equals("자경전")){
+                drawPolyLine(mPolyline_1);
+            }
+            if(name.equals("근정전")){
+                drawPolyLine(mPolyline_3);
+            }
+        }else if(mPlaceServerData.getName().equals("근정전")){
+            if(name.equals("경회루")){
+                drawPolyLine(mPolyline_3);
+            }
+            if(name.equals("자경전")){
+                drawPolyLine(mPolyline_2);
+            }
+        }else if(mPlaceServerData.getName().equals("자경전")){
+            if(name.equals("경회루")){
+                drawPolyLine(mPolyline_1);
+            }
+            if(name.equals("근정전")){
+                drawPolyLine(mPolyline_2);
+            }
+        }
+
+        mMapView.moveCamera(CameraUpdateFactory.newMapPoint(MapPoint.mapPointWithGeoCoord((mPlaceServerData.getLatitude() + lat) / 2, (mPlaceServerData.getLongitude() + lng) / 2)));
+        mMapView.setZoomLevel(1, true);
+//        MapPointBounds mapPointBounds = new MapPointBounds(mPolyline_1);
 //        int padding = 200; // px
 //        mMapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
-        mMapView.moveCamera(CameraUpdateFactory.newMapPoint(MapPoint.mapPointWithGeoCoord((mPlaceServerData.getLatitude()+lat)/2, (mPlaceServerData.getLongitude()+lng)/2)));
-        mMapView.setZoomLevel(1, true);
+    }
+
+    private void drawPolyLine(MapPoint[] polyline){
+        MapPolyline mapPolyline = new MapPolyline(8);
+        mapPolyline.setTag(2000);
+        mapPolyline.setLineColor(Color.argb(128, 0, 0, 255));
+        mapPolyline.addPoints(polyline);
+        mMapView.addPolyline(mapPolyline);
     }
 
     // map 설정 변경 method
@@ -159,7 +225,7 @@ public class OtherPlaceSearchFragment extends Fragment {
         poiItemStart.setShowAnimationType(MapPOIItem.ShowAnimationType.SpringFromGround);
         poiItemStart.setShowCalloutBalloonOnTouch(false);
         poiItemStart.setCustomImageResourceId(R.drawable.image_marker_start);
-        poiItemStart.setCustomImageAnchorPointOffset(new MapPOIItem.ImageOffset(29, 2));
+        poiItemStart.setCustomImageAnchorPointOffset(new MapPOIItem.ImageOffset(20, 4));
         mMapView.addPOIItem(poiItemStart);
 
 //        MapPOIItem marker = new MapPOIItem();
@@ -180,7 +246,7 @@ public class OtherPlaceSearchFragment extends Fragment {
             public void onYesEvent() {
                 // 1. 지도 경로 출력
                 PlaceServerData placeServerData = mOhterPlaceListAdapter.getItem(position);
-                showRoute(placeServerData.getLatitude(), placeServerData.getLongitude());
+                showRoute(placeServerData.getName(), placeServerData.getLatitude(), placeServerData.getLongitude());
                 // 2. 선택 위치 정보 서버에 전달
 
                 // 다이얼로그 종료

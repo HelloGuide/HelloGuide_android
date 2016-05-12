@@ -28,6 +28,9 @@ public class PlaceServerData implements Serializable { // 인텐트 전달을 �
     @SerializedName("lng")
     private double longitude; // 경도
 
+    public PlaceServerData() {
+    }
+
     // 샘플 Data 생성을 위한 생성자
     public PlaceServerData(String name, String content, String url,
                            String code1, String code2, String code3,
