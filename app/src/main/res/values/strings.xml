@@ -13,4 +13,11 @@
     <string name="API_KEY">848629993aa13298a1e4ddeb254e716d</string>
 
     <string name="action_setting">Setting</string>
+
+    <string name="input_info">정보 입력</string>
+    <string name="submit_user_info">입력 완료</string>
+    <string name="user_name">이름을 입력해 주세요.</string>
+    <string name="user_email">이메일 주소를 입력해 주세요.</string>
+    <string name="user_password">비밀번호를 입력해 주세요.</string>
+    <string name="user_password_check">비밀번호를 한 번 더 입력해 주세요.</string>
 </resources>

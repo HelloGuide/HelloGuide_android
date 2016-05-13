@@ -11,9 +11,10 @@
     <dimen name="large_font_size">18sp</dimen>
     <dimen name="default_font_size">14sp</dimen>
 
+    <!-- 디바이더 굵기 -->
+    <dimen name="divider_width">0.25dp</dimen>
     <!-- 탭 인디케이터 굵기-->
     <dimen name="tab_indicator_height">4dp</dimen>
-
     <!-- 다이얼로그 사이즈-->
     <dimen name="default_dialog_width">230dp</dimen>
     <dimen name="default_dialog_height">150dp</dimen>

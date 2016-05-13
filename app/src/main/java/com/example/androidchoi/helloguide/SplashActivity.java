@@ -48,8 +48,8 @@ public class SplashActivity extends AppCompatActivity {
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }
-//    private void goLogin() {
-//        startActivity(new Intent(this, LoginActivity.class));
-//        finish();
-//    }
+    private void goLogin() {
+        startActivity(new Intent(this, LogInActivity.class));
+        finish();
+    }
 }
