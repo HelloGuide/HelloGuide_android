@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
     // 서버에서 건물 목록을 가져오는 메소드
     public void getPlaceList(){
-        NetworkManager.getInstance().getPlaceList(MainActivity.this, new NetworkManager.OnResultListener<PlaceList>() {
+        NetworkManager.getInstance().getPlaceList(new NetworkManager.OnResultListener<PlaceList>() {
             @Override
             public void onSuccess(PlaceList result) {
                 mPlaceListAdapter.setItems(result.getPlaceList());

@@ -60,7 +60,7 @@ public class PlaceContentFragment extends Fragment {
 
     // 상세 정보 요청 메소드 (API)
     public void getPlaceDetailInfo(){
-        NetworkManager.getInstance().getPlaceInfo(getActivity(), mPlaceServerData.getCcbaKdcd(),
+        NetworkManager.getInstance().getPlaceInfo(mPlaceServerData.getCcbaKdcd(),
                 mPlaceServerData.getCcbaCtcd(), mPlaceServerData.getCcbaAsno(), new NetworkManager.OnResultListener<PlaceData>() {
                     @Override
                     public void onSuccess(PlaceData result) {

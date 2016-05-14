@@ -148,7 +148,7 @@ public class OtherPlaceSearchFragment extends Fragment {
 
     // 서버에서 건물 목록을 가져오는 메소드
     public void getOtherPlaceList(){
-        NetworkManager.getInstance().getPlaceList(getActivity(), new NetworkManager.OnResultListener<PlaceList>() {
+        NetworkManager.getInstance().getPlaceList(new NetworkManager.OnResultListener<PlaceList>() {
             @Override
             public void onSuccess(PlaceList result) {
                 mOhterPlaceListAdapter.setItems(result.getPlaceList());
