@@ -6,12 +6,17 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.androidchoi.helloguide.Adapter.OtherPlaceListAdapter;
+import com.example.androidchoi.helloguide.Manager.MyApplication;
+import com.example.androidchoi.helloguide.Manager.NetworkManager;
 import com.example.androidchoi.helloguide.ViewHolder.OtherPlaceItemViewHolder;
+import com.example.androidchoi.helloguide.model.PlaceList;
 import com.example.androidchoi.helloguide.model.PlaceServerData;
 
 import net.daum.mf.map.api.CameraUpdateFactory;
@@ -116,17 +121,18 @@ public class OtherPlaceSearchFragment extends Fragment {
         };
 
         // 샘플 아이템 생성
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("근정전", "근정전", "http://www.cha.go.kr/unisearch/images/national_treasure/1611701.jpg", "11", "02230000", "11", 37.578575, 126.977013));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("경회루", "경회루", "http://www.cha.go.kr/unisearch/images/national_treasure/1611724.jpg", "11", "02240000", "11", 37.579773, 126.976051));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("자경전", "자경전", "http://www.cha.go.kr/unisearch/images/treasure/1613927.jpg", "12", "08090000", "11", 37.580299, 126.978096));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("십장생 굴뚝", "십장생 굴뚝", "http://www.cha.go.kr/unisearch/images/treasure/1613945.jpg", "12", "08100000", "11", 37.580566, 126.978195));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("아미산 굴뚝", "아미산 굴뚝", "http://www.cha.go.kr/unisearch/images/treasure/1613958.jpg", "12", "08110000", "11", 37.580238, 126.976964));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("근정문 및 행각", "근정문 및 행각", "http://www.cha.go.kr/unisearch/images/treasure/1613973.jpg", "12", "08120000", "11", 37.577736, 126.976967));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("풍기대", "풍기대", "http://www.cha.go.kr/unisearch/images/treasure/1614087.jpg", "12", "08470000", "11", 37.580799, 126.976997));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("사정전", "사정전", "http://www.cha.go.kr/unisearch/images/treasure/2283192.jpg", "12", "17590000", "11", 37.579109, 126.977043));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("수정전", "수정전", "http://www.cha.go.kr/unisearch/images/treasure/2281864.jpg", "12", "17600000", "11", 37.578999, 126.975952));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("향원정", "향원정", "http://www.cha.go.kr/unisearch/images/treasure/2281891.jpg", "12", "17610000", "11", 37.582371, 126.977051));
-        mOhterPlaceListAdapter.addItems(new PlaceServerData("육상궁", "육상궁", "http://www.cha.go.kr/unisearch/images/history_site/1624577.jpg", "13", "01490000", "11", 37.585438, 126.973503));
+//        mOhterPlaceListAdapter.addItems(new PlaceServerData("근정전", "근정전", "http://www.cha.go.kr/unisearch/images/national_treasure/1611701.jpg", "11", "02230000", "11", 37.578575, 126.977013));
+//        mOhterPlaceListAdapter.addItems(new PlaceServerData("경회루", "경회루", "http://www.cha.go.kr/unisearch/images/national_treasure/1611724.jpg", "11", "02240000", "11", 37.579773, 126.976051));
+//        mOhterPlaceListAdapter.addItems(new PlaceServerData("자경전", "자경전", "http://www.cha.go.kr/unisearch/images/treasure/1613927.jpg", "12", "08090000", "11", 37.580299, 126.978096));
+//        mOhterPlaceListAdapter.addItems(new PlaceServerData("십장생 굴뚝", "십장생 굴뚝", "http://www.cha.go.kr/unisearch/images/treasure/1613945.jpg", "12", "08100000", "11", 37.580566, 126.978195));
+//        mOhterPlaceListAdapter.addItems(new PlaceServerData("아미산 굴뚝", "아미산 굴뚝", "http://www.cha.go.kr/unisearch/images/treasure/1613958.jpg", "12", "08110000", "11", 37.580238, 126.976964));
+//        mOhterPlaceListAdapter.addItems(new PlaceServerData("근정문 및 행각", "근정문 및 행각", "http://www.cha.go.kr/unisearch/images/treasure/1613973.jpg", "12", "08120000", "11", 37.577736, 126.976967));
+//        mOhterPlaceListAdapter.addItems(new PlaceServerData("풍기대", "풍기대", "http://www.cha.go.kr/unisearch/images/treasure/1614087.jpg", "12", "08470000", "11", 37.580799, 126.976997));
+//        mOhterPlaceListAdapter.addItems(new PlaceServerData("사정전", "사정전", "http://www.cha.go.kr/unisearch/images/treasure/2283192.jpg", "12", "17590000", "11", 37.579109, 126.977043));
+//        mOhterPlaceListAdapter.addItems(new PlaceServerData("수정전", "수정전", "http://www.cha.go.kr/unisearch/images/treasure/2281864.jpg", "12", "17600000", "11", 37.578999, 126.975952));
+//        mOhterPlaceListAdapter.addItems(new PlaceServerData("향원정", "향원정", "http://www.cha.go.kr/unisearch/images/treasure/2281891.jpg", "12", "17610000", "11", 37.582371, 126.977051));
+//        mOhterPlaceListAdapter.addItems(new PlaceServerData("육상궁", "육상궁", "http://www.cha.go.kr/unisearch/images/history_site/1624577.jpg", "13", "01490000", "11", 37.585438, 126.973503));
+        getOtherPlaceList();
 
         // 아이템 클릭 이벤트 설정
         mOhterPlaceListAdapter.setOnItemClickListener(new OtherPlaceItemViewHolder.OnItemClickListener() {
@@ -137,6 +143,22 @@ public class OtherPlaceSearchFragment extends Fragment {
         });
 
         return view;
+    }
+
+
+    // 서버에서 건물 목록을 가져오는 메소드
+    public void getOtherPlaceList(){
+        NetworkManager.getInstance().getPlaceList(getActivity(), new NetworkManager.OnResultListener<PlaceList>() {
+            @Override
+            public void onSuccess(PlaceList result) {
+                mOhterPlaceListAdapter.setItems(result.getPlaceList());
+            }
+            @Override
+            public void onFail(String error) {
+                Log.i("error : ", error);
+                Toast.makeText(MyApplication.getContext(), "데이터를 불러 올 수 없습니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     // 지도에 경로 출력 method

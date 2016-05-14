@@ -67,7 +67,7 @@ public class NetworkManager {
                 }));
     }
 
-    private static final String SERVER = "http://52.192.85.150:8000/testGet";
+    private static final String SERVER = "http://52.192.85.150:8000/getPlaceList";
     // 건물 리스트 정보 요청 method
     public void getPlaceList(Context context, final OnResultListener<PlaceList> listener){
         RequestQueue request = Volley.newRequestQueue(context);

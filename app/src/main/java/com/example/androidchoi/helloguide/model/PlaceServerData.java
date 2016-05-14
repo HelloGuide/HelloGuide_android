@@ -19,6 +19,7 @@ public class PlaceServerData implements Serializable { // 인텐트 전달을 �
     private String mName;
     @SerializedName("simpleContent")
     private String mSimpleContent; // 간략 정보
+    @SerializedName("imageUrl")
     private String mImageUrl;
     private String ccbaKdcd; // 종목코드
     private String ccbaAsno; // 지정번호
