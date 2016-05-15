@@ -15,6 +15,9 @@ import com.example.androidchoi.helloguide.model.PlaceList;
 import com.google.gson.Gson;
 
 import java.io.ByteArrayInputStream;
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +37,9 @@ public class NetworkManager {
     }
 
     private NetworkManager(){
+        CookieManager cookieManager = new CookieManager(new PersistentCookieStore(MyApplication.getContext()),
+                CookiePolicy.ACCEPT_ORIGINAL_SERVER);
+        CookieHandler.setDefault(cookieManager);
         parser = new XMLParser();
         gson = new Gson();
     }
@@ -87,6 +93,40 @@ public class NetworkManager {
                         listener.onFail(error.getMessage());
                     }
                 }));
+
+    }
+
+    // 다른 건물 위치 정보 요청 method
+    private  static final String GET_OTHER_PLACE = SERVER + "/rasp/goSearch";
+    public void GetOtherPlace(final double stdX, final double stdY, final double posX, final double posY, final String name
+                              ,final  OnResultListener<String> listener){
+        request.add(new StringRequest(Request.Method.POST, GET_OTHER_PLACE,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        listener.onSuccess(s);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Log.i("Error", volleyError.getMessage());
+                        listener.onFail(volleyError.getMessage());
+                    }
+                })
+        {
+
+            @Override
+            protected Map<String,String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("stdX", stdX+"");
+                params.put("stdY", stdY+"");
+                params.put("posX", posX+"");
+                params.put("posY", posY+"");
+                params.put("name", name);
+                return params;
+            }
+        });
 
     }
 

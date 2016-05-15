@@ -17,6 +17,8 @@ public class PlaceServerData implements Serializable { // 인텐트 전달을 �
 
     @SerializedName("name")
     private String mName;
+    @SerializedName("enName")
+    private String mEnName;
     @SerializedName("simpleContent")
     private String mSimpleContent; // 간략 정보
     @SerializedName("imageUrl")
@@ -33,10 +35,11 @@ public class PlaceServerData implements Serializable { // 인텐트 전달을 �
     }
 
     // 샘플 Data 생성을 위한 생성자
-    public PlaceServerData(String name, String content, String url,
+    public PlaceServerData(String name, String enName, String content, String url,
                            String code1, String code2, String code3,
                            double lat, double lng){
         mName = name;
+        mEnName = enName;
         mSimpleContent = content;
         mImageUrl = url;
         ccbaKdcd = code1;
@@ -49,6 +52,8 @@ public class PlaceServerData implements Serializable { // 인텐트 전달을 �
     public String getName() {
         return mName;
     }
+
+    public String getEnName() { return mEnName; }
 
     public String getSimpleContent() {
         return mSimpleContent;

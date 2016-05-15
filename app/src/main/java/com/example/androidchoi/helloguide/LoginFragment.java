@@ -62,7 +62,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 hideSoftKeyboard();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.login_container, new InputUserInfoFragment()).addToBackStack(null).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.login_container, new InputUserInfoFragment()).addToBackStack(null).commit();
             }
         });
         mEditEmail = (EditText) view.findViewById(R.id.editText_login_email);

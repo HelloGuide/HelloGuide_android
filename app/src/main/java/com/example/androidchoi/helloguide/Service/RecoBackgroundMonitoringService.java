@@ -221,19 +221,19 @@ public class RecoBackgroundMonitoringService extends Service implements RECOMoni
             Log.i("BackMonitoringService", majorCode + "/" + minorCode);
             switch (majorCode + "" + minorCode){
                 case "50119853":
-                    placeServerData = new PlaceServerData("근정전", "경복궁 근정전은 조선시대 법궁인 경복궁의 중심 건물로, 신하들이 임금에게 새해 인사를 드리거나 국가의식을 거행하고 외국 사신을 맞이하던 곳이다.", "http://www.cha.go.kr/unisearch/images/national_treasure/1611701.jpg", "11", "02230000", "11", 37.578575, 126.977013);
+                    placeServerData = new PlaceServerData("근정전","Geunjeongjeon","경복궁 근정전은 조선시대 법궁인 경복궁의 중심 건물로, 신하들이 임금에게 새해 인사를 드리거나 국가의식을 거행하고 외국 사신을 맞이하던 곳이다.", "http://www.cha.go.kr/unisearch/images/national_treasure/1611701.jpg", "11", "02230000", "11", 37.578575, 126.977013);
                     if(beacon.getAccuracy() < 2) {
                         check = true;
                     }
                     break;
                 case "50119854":
-                    placeServerData = new PlaceServerData("경회루", "경복궁 근정전 서북쪽 연못 안에 세운 경회루는, 나라에 경사가 있거나 사신이 왔을 때 연회를 베풀던 곳이다.", "http://www.cha.go.kr/unisearch/images/national_treasure/1611724.jpg", "11", "02240000", "11", 37.579773, 126.976051);
+                    placeServerData = new PlaceServerData("경회루","Gyeonghoeru","경복궁 근정전 서북쪽 연못 안에 세운 경회루는, 나라에 경사가 있거나 사신이 왔을 때 연회를 베풀던 곳이다.", "http://www.cha.go.kr/unisearch/images/national_treasure/1611724.jpg", "11", "02240000", "11", 37.579773, 126.976051);
                     if(beacon.getAccuracy() < 2) {
                         check = true;
                     }
                     break;
                 case "50119855":
-                    placeServerData = new PlaceServerData("자경전", "자경전은 1867년 경복궁을 다시 지으면서 자미당 터에 고종의 양어머니인 조대비(신정왕후)를 위해 지은 대비전이다.", "http://www.cha.go.kr/unisearch/images/treasure/1613927.jpg", "12",  "08090000", "11", 37.580299, 126.978096);
+                    placeServerData = new PlaceServerData("자경전","Jagyeongjeon", "자경전은 1867년 경복궁을 다시 지으면서 자미당 터에 고종의 양어머니인 조대비(신정왕후)를 위해 지은 대비전이다.", "http://www.cha.go.kr/unisearch/images/treasure/1613927.jpg", "12",  "08090000", "11", 37.580299, 126.978096);
                     if(beacon.getAccuracy() < 2) {
                         check = true;
                     }

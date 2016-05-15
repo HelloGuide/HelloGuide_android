@@ -19,7 +19,7 @@
         android:textSize="60dp"
         android:layout_above="@+id/textView2"
         android:layout_centerHorizontal="true"
-        android:textColor="@android:color/black"/>
+        android:textColor="@android:color/white"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -29,5 +29,5 @@
         android:textSize="24dp"
         android:layout_centerVertical="true"
         android:layout_alignEnd="@+id/textView"
-        android:textColor="@android:color/black"/>
+        android:textColor="@android:color/white"/>
 </RelativeLayout>

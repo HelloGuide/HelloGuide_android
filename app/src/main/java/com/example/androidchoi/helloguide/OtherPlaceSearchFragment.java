@@ -267,9 +267,24 @@ public class OtherPlaceSearchFragment extends Fragment {
             @Override
             public void onYesEvent() {
                 // 1. 지도 경로 출력
-                PlaceServerData placeServerData = mOhterPlaceListAdapter.getItem(position);
-                showRoute(placeServerData.getName(), placeServerData.getLatitude(), placeServerData.getLongitude());
+                PlaceServerData otherPlaceServerData = mOhterPlaceListAdapter.getItem(position);
+                showRoute(otherPlaceServerData.getName(), otherPlaceServerData.getLatitude(), otherPlaceServerData.getLongitude());
                 // 2. 선택 위치 정보 서버에 전달
+                NetworkManager.getInstance().GetOtherPlace(mPlaceServerData.getLatitude(), mPlaceServerData.getLongitude()
+                        , otherPlaceServerData.getLatitude(), otherPlaceServerData.getLongitude(), otherPlaceServerData.getEnName()
+                        , new NetworkManager.OnResultListener<String>() {
+                            @Override
+                            public void onSuccess(String result) {
+
+                            }
+
+                            @Override
+                            public void onFail(String error) {
+                                Log.i("error : ", error);
+                                Toast.makeText(MyApplication.getContext(), "요청에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                );
 
                 // 다이얼로그 종료
                 dialog.dismiss();
