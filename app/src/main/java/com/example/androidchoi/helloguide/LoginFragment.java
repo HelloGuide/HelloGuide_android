@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.androidchoi.helloguide.Manager.MyApplication;
 import com.example.androidchoi.helloguide.Manager.NetworkManager;
+import com.example.androidchoi.helloguide.Manager.PropertyManager;
 
 
 /**
@@ -78,6 +79,8 @@ public class LoginFragment extends Fragment {
             public void onSuccess(String result) {
                 Log.i("result", result);
                 if(result.equals(MESSAGE_SUCCESS)){
+                    PropertyManager.getInstance().setId(email);
+                    PropertyManager.getInstance().setPassword(password);
                     startActivity(new Intent(getContext(), MainActivity.class));
                     getActivity().finish();
                 }else{
