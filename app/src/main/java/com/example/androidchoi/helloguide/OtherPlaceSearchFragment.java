@@ -3,6 +3,7 @@ package com.example.androidchoi.helloguide;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,12 @@ import com.example.androidchoi.helloguide.Manager.NetworkManager;
 import com.example.androidchoi.helloguide.ViewHolder.OtherPlaceItemViewHolder;
 import com.example.androidchoi.helloguide.model.PlaceList;
 import com.example.androidchoi.helloguide.model.PlaceServerData;
+import com.perples.recosdk.RECOBeacon;
+import com.perples.recosdk.RECOBeaconManager;
+import com.perples.recosdk.RECOBeaconRegion;
+import com.perples.recosdk.RECOErrorCode;
+import com.perples.recosdk.RECORangingListener;
+import com.perples.recosdk.RECOServiceConnectListener;
 
 import net.daum.mf.map.api.CameraUpdateFactory;
 import net.daum.mf.map.api.MapPOIItem;
@@ -25,15 +32,21 @@ import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapPolyline;
 import net.daum.mf.map.api.MapView;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class OtherPlaceSearchFragment extends Fragment {
+public class OtherPlaceSearchFragment extends Fragment implements RECOServiceConnectListener,RECORangingListener {
 
+    protected RECOBeaconManager mRecoManager;
+    protected ArrayList<RECOBeaconRegion> mRegions;
     MapView mMapView;
     RecyclerView mRecyclerView;
     OtherPlaceListAdapter mOhterPlaceListAdapter;
+    boolean isNearCheck = false;
     private PlaceServerData mPlaceServerData;
     private MapPoint[] mPolyline_1;
     private MapPoint[] mPolyline_2;
@@ -58,11 +71,19 @@ public class OtherPlaceSearchFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mRecoManager = RECOBeaconManager.getInstance(getActivity(), MainActivity.SCAN_RECO_ONLY, MainActivity.ENABLE_BACKGROUND_RANGING_TIMEOUT);
+        mRegions = this.generateBeaconRegion();
+        mRecoManager.setRangingListener(this);
+        mRecoManager.bind(this);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_other_place_search, container, false);
-
         mPlaceServerData = (PlaceServerData)getArguments().getSerializable(PlaceInfoActivity.EXTRA_PLACE_SERVER_DATA);
 
         // daum map 생성
@@ -80,9 +101,6 @@ public class OtherPlaceSearchFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(),2, GridLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        // Listing Places
-        // List<PlaceServerData> placeList = new ArrayList<>();
-
         mPolyline_1 = new MapPoint[]{
                 MapPoint.mapPointWithGeoCoord(37.579773, 126.976051),
                 MapPoint.mapPointWithGeoCoord(37.579773, 126.976395),
@@ -94,7 +112,6 @@ public class OtherPlaceSearchFragment extends Fragment {
                 MapPoint.mapPointWithGeoCoord(37.580227, 126.978096),
                 MapPoint.mapPointWithGeoCoord(37.580299, 126.978096)
         };
-
         mPolyline_2 = new MapPoint[]{
                 MapPoint.mapPointWithGeoCoord(37.578575, 126.977013),
                 MapPoint.mapPointWithGeoCoord(37.578970, 126.977028),
@@ -109,7 +126,6 @@ public class OtherPlaceSearchFragment extends Fragment {
                 MapPoint.mapPointWithGeoCoord(37.580215, 126.978090),
                 MapPoint.mapPointWithGeoCoord(37.580299, 126.978096)
         };
-
         mPolyline_3 = new MapPoint[]{
                 MapPoint.mapPointWithGeoCoord(37.578575, 126.977013),
                 MapPoint.mapPointWithGeoCoord(37.578964, 126.977028),
@@ -141,10 +157,15 @@ public class OtherPlaceSearchFragment extends Fragment {
                 showSearchDialog(position);
             }
         });
-
         return view;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.stop(mRegions);
+        this.unbind();
+    }
 
     // 서버에서 건물 목록을 가져오는 메소드
     public void getOtherPlaceList(){
@@ -153,6 +174,7 @@ public class OtherPlaceSearchFragment extends Fragment {
             public void onSuccess(PlaceList result) {
                 mOhterPlaceListAdapter.setItems(result.getPlaceList());
             }
+
             @Override
             public void onFail(String error) {
                 Log.i("error : ", error);
@@ -238,7 +260,6 @@ public class OtherPlaceSearchFragment extends Fragment {
 
     // map start marker 설정 method
     public void settingStartMarker(double lat, double lng){
-
         MapPOIItem poiItemStart = new MapPOIItem();
         poiItemStart.setItemName("Start");
         poiItemStart.setTag(1001);
@@ -249,7 +270,6 @@ public class OtherPlaceSearchFragment extends Fragment {
         poiItemStart.setCustomImageResourceId(R.drawable.image_marker_start);
         poiItemStart.setCustomImageAnchorPointOffset(new MapPOIItem.ImageOffset(20, 4));
         mMapView.addPOIItem(poiItemStart);
-
 //        MapPOIItem marker = new MapPOIItem();
 //        marker.setItemName(getString(R.string.gyeongbokgung));
 //        marker.setTag(0);
@@ -270,20 +290,26 @@ public class OtherPlaceSearchFragment extends Fragment {
                 PlaceServerData otherPlaceServerData = mOhterPlaceListAdapter.getItem(position);
                 showRoute(otherPlaceServerData.getName(), otherPlaceServerData.getLatitude(), otherPlaceServerData.getLongitude());
                 // 2. 선택 위치 정보 서버에 전달
-                NetworkManager.getInstance().GetOtherPlace(mPlaceServerData.getLatitude(), mPlaceServerData.getLongitude()
-                        , otherPlaceServerData.getLatitude(), otherPlaceServerData.getLongitude(), otherPlaceServerData.getEnName(), mPlaceServerData.getRaspiNum()
-                        , new NetworkManager.OnResultListener<String>() {
-                            @Override
-                            public void onSuccess(String result) {
-                            }
+                if(isNearCheck){
+                    NetworkManager.getInstance().GetOtherPlace(mPlaceServerData.getLatitude(), mPlaceServerData.getLongitude()
+                            , otherPlaceServerData.getLatitude(), otherPlaceServerData.getLongitude(), otherPlaceServerData.getEnName(), mPlaceServerData.getRaspiNum()
+                            , new NetworkManager.OnResultListener<String>() {
+                                @Override
+                                public void onSuccess(String result) {
+                                }
 
-                            @Override
-                            public void onFail(String error) {
-                                Log.i("error : ", error);
-                                Toast.makeText(MyApplication.getContext(), "요청에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                @Override
+                                public void onFail(String error) {
+                                    Log.i("error : ", error);
+                                    Toast.makeText(MyApplication.getContext(), "요청에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                );
+                    );
+                }
+                else{
+                    Toast.makeText(MyApplication.getContext(), "해당 표지판이 멀어 탐색을 할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                }
+
                 // 다이얼로그 종료
                 dialog.dismiss();
             }
@@ -295,5 +321,89 @@ public class OtherPlaceSearchFragment extends Fragment {
             }
         };
         dialog.setButtonEventListener(listener);
+    }
+
+    //RECOServiceConnectListener implement method
+    @Override
+    public void onServiceConnect() {
+        Log.i("RECORangingActivity", "onServiceConnect()");
+        mRecoManager.setDiscontinuousScan(MainActivity.DISCONTINUOUS_SCAN);
+        this.start(mRegions);
+        //Write the code when RECOBeaconManager is bound to RECOBeaconService
+    }
+
+    @Override
+    public void onServiceFail(RECOErrorCode recoErrorCode) {
+        return;
+    }
+
+    //RECORangingListener implement method
+    @Override
+    public void didRangeBeaconsInRegion(Collection<RECOBeacon> recoBeacons, RECOBeaconRegion recoBeaconRegion) {
+        Log.i("RECORangingActivity", "didRangeBeaconsInRegion() region: " + recoBeaconRegion.getUniqueIdentifier() + ", number of beacons ranged: " + recoBeacons.size());
+        //Write the code when the beacons in the region is received
+        for(RECOBeacon region : recoBeacons) {
+            Log.i("dfasdfas", region.getAccuracy()+"");
+            if(region.getAccuracy() < 2) {
+                String serial = region.getMajor() + region.getMinor() + "";
+                if(serial.equals(mPlaceServerData.getRaspiNum())){
+                    isNearCheck = true;
+                    return;
+                }
+            }
+        }
+        isNearCheck = false;
+    }
+
+    @Override
+    public void rangingBeaconsDidFailForRegion(RECOBeaconRegion recoBeaconRegion, RECOErrorCode recoErrorCode) {
+        return;
+    }
+
+    protected void start(ArrayList<RECOBeaconRegion> regions) {
+        for(RECOBeaconRegion region : regions) {
+            try {
+                mRecoManager.startRangingBeaconsInRegion(region);
+            } catch (RemoteException e) {
+                Log.i("RECORangingActivity", "Remote Exception");
+                e.printStackTrace();
+            } catch (NullPointerException e) {
+                Log.i("RECORangingActivity", "Null Pointer Exception");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    protected void stop(ArrayList<RECOBeaconRegion> regions) {
+        for(RECOBeaconRegion region : regions) {
+            try {
+                mRecoManager.stopRangingBeaconsInRegion(region);
+            } catch (RemoteException e) {
+                Log.i("RECORangingActivity", "Remote Exception");
+                e.printStackTrace();
+            } catch (NullPointerException e) {
+                Log.i("RECORangingActivity", "Null Pointer Exception");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void unbind() {
+        try {
+            mRecoManager.unbind();
+        } catch (RemoteException e) {
+            Log.i("RECORangingActivity", "Remote Exception");
+            e.printStackTrace();
+        }
+    }
+
+    private ArrayList<RECOBeaconRegion> generateBeaconRegion() {
+        ArrayList<RECOBeaconRegion> regions = new ArrayList<RECOBeaconRegion>();
+
+        RECOBeaconRegion recoRegion;
+        recoRegion = new RECOBeaconRegion(MainActivity.RECO_UUID, "RECO Sample Region");
+        regions.add(recoRegion);
+
+        return regions;
     }
 }
