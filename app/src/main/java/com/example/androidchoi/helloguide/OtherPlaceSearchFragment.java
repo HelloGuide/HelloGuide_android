@@ -271,11 +271,10 @@ public class OtherPlaceSearchFragment extends Fragment {
                 showRoute(otherPlaceServerData.getName(), otherPlaceServerData.getLatitude(), otherPlaceServerData.getLongitude());
                 // 2. 선택 위치 정보 서버에 전달
                 NetworkManager.getInstance().GetOtherPlace(mPlaceServerData.getLatitude(), mPlaceServerData.getLongitude()
-                        , otherPlaceServerData.getLatitude(), otherPlaceServerData.getLongitude(), otherPlaceServerData.getEnName()
+                        , otherPlaceServerData.getLatitude(), otherPlaceServerData.getLongitude(), otherPlaceServerData.getEnName(), mPlaceServerData.getRaspiNum()
                         , new NetworkManager.OnResultListener<String>() {
                             @Override
                             public void onSuccess(String result) {
-
                             }
 
                             @Override
@@ -285,7 +284,6 @@ public class OtherPlaceSearchFragment extends Fragment {
                             }
                         }
                 );
-
                 // 다이얼로그 종료
                 dialog.dismiss();
             }

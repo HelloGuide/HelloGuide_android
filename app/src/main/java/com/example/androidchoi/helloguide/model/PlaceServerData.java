@@ -30,6 +30,8 @@ public class PlaceServerData implements Serializable { // 인텐트 전달을 �
     private double latitude; // 위도
     @SerializedName("lng")
     private double longitude; // 경도
+    @SerializedName("raspiNum")
+    private int mRaspiNum; // 기준 라즈베리 파이 넘버.
 
     public PlaceServerData() {
     }
@@ -37,7 +39,7 @@ public class PlaceServerData implements Serializable { // 인텐트 전달을 �
     // 샘플 Data 생성을 위한 생성자
     public PlaceServerData(String name, String enName, String content, String url,
                            String code1, String code2, String code3,
-                           double lat, double lng){
+                           double lat, double lng, int raspiNum){
         mName = name;
         mEnName = enName;
         mSimpleContent = content;
@@ -47,6 +49,7 @@ public class PlaceServerData implements Serializable { // 인텐트 전달을 �
         ccbaCtcd = code3;
         latitude = lat;
         longitude = lng;
+        mRaspiNum = raspiNum;
     }
 
     public String getName() {
@@ -78,4 +81,6 @@ public class PlaceServerData implements Serializable { // 인텐트 전달을 �
     public double getLatitude() { return latitude; }
 
     public double getLongitude() { return longitude; }
+
+    public int getRaspiNum() { return  mRaspiNum; }
 }
