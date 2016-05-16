@@ -59,7 +59,6 @@ public class NetworkManager {
                     public void onResponse(String response) {
                         // TODO Auto-generated method stub
                         ByteArrayInputStream bais = new ByteArrayInputStream(response.getBytes(Charset.forName("UTF-8")));
-                        Log.i("response", response);
                         PlaceData placeLab = parser.fromXml(bais, "item", PlaceData.class);
                         listener.onSuccess(placeLab);
                     }
@@ -68,7 +67,6 @@ public class NetworkManager {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO Auto-generated method stub
-                        Log.i("Error", error.getMessage());
                         listener.onFail(error.getMessage());
                     }
                 }));
@@ -89,7 +87,6 @@ public class NetworkManager {
                 new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.i("Error", error.getMessage());
                         listener.onFail(error.getMessage());
                     }
                 }));
@@ -110,7 +107,6 @@ public class NetworkManager {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        Log.i("Error", volleyError.getMessage());
                         listener.onFail(volleyError.getMessage());
                     }
                 })
