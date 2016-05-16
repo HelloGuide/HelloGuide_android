@@ -39,7 +39,7 @@ import java.util.Collection;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class OtherPlaceSearchFragment extends Fragment implements RECOServiceConnectListener,RECORangingListener {
+public class OtherPlaceSearchFragment extends Fragment implements RECOServiceConnectListener, RECORangingListener {
 
     protected RECOBeaconManager mRecoManager;
     protected ArrayList<RECOBeaconRegion> mRegions;
@@ -84,7 +84,7 @@ public class OtherPlaceSearchFragment extends Fragment implements RECOServiceCon
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_other_place_search, container, false);
-        mPlaceServerData = (PlaceServerData)getArguments().getSerializable(PlaceInfoActivity.EXTRA_PLACE_SERVER_DATA);
+        mPlaceServerData = (PlaceServerData) getArguments().getSerializable(PlaceInfoActivity.EXTRA_PLACE_SERVER_DATA);
 
         // daum map 생성
         mMapView = new MapView(getActivity());
@@ -95,10 +95,10 @@ public class OtherPlaceSearchFragment extends Fragment implements RECOServiceCon
         settingStartMarker(mPlaceServerData.getLatitude(), mPlaceServerData.getLongitude()); // 출발지 마커 표시
 
         // Setting RecyclerView, PlaceListAdapter
-        mRecyclerView = (RecyclerView)view.findViewById(R.id.recylerView_other_place_list);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recylerView_other_place_list);
         mOhterPlaceListAdapter = new OtherPlaceListAdapter();
         mRecyclerView.setAdapter(mOhterPlaceListAdapter);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(),2, GridLayoutManager.VERTICAL, false);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
 
         mPolyline_1 = new MapPoint[]{
@@ -168,7 +168,7 @@ public class OtherPlaceSearchFragment extends Fragment implements RECOServiceCon
     }
 
     // 서버에서 건물 목록을 가져오는 메소드
-    public void getOtherPlaceList(){
+    public void getOtherPlaceList() {
         NetworkManager.getInstance().getPlaceList(new NetworkManager.OnResultListener<PlaceList>() {
             @Override
             public void onSuccess(PlaceList result) {
@@ -184,7 +184,7 @@ public class OtherPlaceSearchFragment extends Fragment implements RECOServiceCon
     }
 
     // 지도에 경로 출력 method
-    public void showRoute(String name, double lat, double lng){
+    public void showRoute(String name, double lat, double lng) {
 
         MapPOIItem existingPOIItemEnd = mMapView.findPOIItemByTag(1002);
         if (existingPOIItemEnd != null) {
@@ -206,25 +206,25 @@ public class OtherPlaceSearchFragment extends Fragment implements RECOServiceCon
         poiItemEnd.setCustomImageAnchorPointOffset(new MapPOIItem.ImageOffset(20, 4));
         mMapView.addPOIItem(poiItemEnd);
 
-        if(mPlaceServerData.getName().equals("경회루")){
-            if(name.equals("자경전")){
+        if (mPlaceServerData.getName().equals("경회루")) {
+            if (name.equals("자경전")) {
                 drawPolyLine(mPolyline_1);
             }
-            if(name.equals("근정전")){
+            if (name.equals("근정전")) {
                 drawPolyLine(mPolyline_3);
             }
-        }else if(mPlaceServerData.getName().equals("근정전")){
-            if(name.equals("경회루")){
+        } else if (mPlaceServerData.getName().equals("근정전")) {
+            if (name.equals("경회루")) {
                 drawPolyLine(mPolyline_3);
             }
-            if(name.equals("자경전")){
+            if (name.equals("자경전")) {
                 drawPolyLine(mPolyline_2);
             }
-        }else if(mPlaceServerData.getName().equals("자경전")){
-            if(name.equals("경회루")){
+        } else if (mPlaceServerData.getName().equals("자경전")) {
+            if (name.equals("경회루")) {
                 drawPolyLine(mPolyline_1);
             }
-            if(name.equals("근정전")){
+            if (name.equals("근정전")) {
                 drawPolyLine(mPolyline_2);
             }
         }
@@ -236,7 +236,7 @@ public class OtherPlaceSearchFragment extends Fragment implements RECOServiceCon
 //        mMapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
     }
 
-    private void drawPolyLine(MapPoint[] polyline){
+    private void drawPolyLine(MapPoint[] polyline) {
         MapPolyline mapPolyline = new MapPolyline(8);
         mapPolyline.setTag(2000);
         mapPolyline.setLineColor(Color.argb(128, 0, 0, 255));
@@ -259,11 +259,11 @@ public class OtherPlaceSearchFragment extends Fragment implements RECOServiceCon
     }
 
     // map start marker 설정 method
-    public void settingStartMarker(double lat, double lng){
+    public void settingStartMarker(double lat, double lng) {
         MapPOIItem poiItemStart = new MapPOIItem();
         poiItemStart.setItemName("Start");
         poiItemStart.setTag(1001);
-        poiItemStart.setMapPoint(MapPoint.mapPointWithGeoCoord(lat,lng));
+        poiItemStart.setMapPoint(MapPoint.mapPointWithGeoCoord(lat, lng));
         poiItemStart.setMarkerType(MapPOIItem.MarkerType.CustomImage);
         poiItemStart.setShowAnimationType(MapPOIItem.ShowAnimationType.SpringFromGround);
         poiItemStart.setShowCalloutBalloonOnTouch(false);
@@ -290,9 +290,10 @@ public class OtherPlaceSearchFragment extends Fragment implements RECOServiceCon
                 PlaceServerData otherPlaceServerData = mOhterPlaceListAdapter.getItem(position);
                 showRoute(otherPlaceServerData.getName(), otherPlaceServerData.getLatitude(), otherPlaceServerData.getLongitude());
                 // 2. 선택 위치 정보 서버에 전달
-                if(isNearCheck){
+                Log.i("daasdasdfadfasdfasdfsf", isNearCheck + "");
+                if (isNearCheck) {
                     NetworkManager.getInstance().GetOtherPlace(mPlaceServerData.getLatitude(), mPlaceServerData.getLongitude()
-                            , otherPlaceServerData.getLatitude(), otherPlaceServerData.getLongitude(), otherPlaceServerData.getEnName(), mPlaceServerData.getRaspiNum()
+                            , otherPlaceServerData.getLatitude(), otherPlaceServerData.getLongitude(), otherPlaceServerData.getEnName(), mPlaceServerData.getSerial()
                             , new NetworkManager.OnResultListener<String>() {
                                 @Override
                                 public void onSuccess(String result) {
@@ -305,8 +306,7 @@ public class OtherPlaceSearchFragment extends Fragment implements RECOServiceCon
                                 }
                             }
                     );
-                }
-                else{
+                } else {
                     Toast.makeText(MyApplication.getContext(), "해당 표지판이 멀어 탐색을 할 수 없습니다.", Toast.LENGTH_SHORT).show();
                 }
 
@@ -342,11 +342,11 @@ public class OtherPlaceSearchFragment extends Fragment implements RECOServiceCon
     public void didRangeBeaconsInRegion(Collection<RECOBeacon> recoBeacons, RECOBeaconRegion recoBeaconRegion) {
         Log.i("RECORangingActivity", "didRangeBeaconsInRegion() region: " + recoBeaconRegion.getUniqueIdentifier() + ", number of beacons ranged: " + recoBeacons.size());
         //Write the code when the beacons in the region is received
-        for(RECOBeacon region : recoBeacons) {
-            Log.i("dfasdfas", region.getAccuracy()+"");
-            if(region.getAccuracy() < 2) {
-                String serial = region.getMajor() + region.getMinor() + "";
-                if(serial.equals(mPlaceServerData.getRaspiNum())){
+        for (RECOBeacon region : recoBeacons) {
+            Log.i(region.getMajor() + "" + region.getMinor(), region.getAccuracy() + "");
+            if (region.getAccuracy() < 3) {
+                String serial = region.getMajor() + "" + region.getMinor();
+                if (serial.equals(mPlaceServerData.getSerial())) {
                     isNearCheck = true;
                     return;
                 }
@@ -361,7 +361,7 @@ public class OtherPlaceSearchFragment extends Fragment implements RECOServiceCon
     }
 
     protected void start(ArrayList<RECOBeaconRegion> regions) {
-        for(RECOBeaconRegion region : regions) {
+        for (RECOBeaconRegion region : regions) {
             try {
                 mRecoManager.startRangingBeaconsInRegion(region);
             } catch (RemoteException e) {
@@ -375,7 +375,7 @@ public class OtherPlaceSearchFragment extends Fragment implements RECOServiceCon
     }
 
     protected void stop(ArrayList<RECOBeaconRegion> regions) {
-        for(RECOBeaconRegion region : regions) {
+        for (RECOBeaconRegion region : regions) {
             try {
                 mRecoManager.stopRangingBeaconsInRegion(region);
             } catch (RemoteException e) {

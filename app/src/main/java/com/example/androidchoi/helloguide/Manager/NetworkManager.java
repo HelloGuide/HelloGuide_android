@@ -98,7 +98,7 @@ public class NetworkManager {
 
     // 다른 건물 위치 정보 요청 method
     private  static final String GET_OTHER_PLACE = SERVER + "/rasp/goSearch";
-    public void GetOtherPlace(final double stdX, final double stdY, final double posX, final double posY, final String name, final int piNum
+    public void GetOtherPlace(final double stdX, final double stdY, final double posX, final double posY, final String name, final String Serial
                               ,final  OnResultListener<String> listener){
         request.add(new StringRequest(Request.Method.POST, GET_OTHER_PLACE,
                 new Response.Listener<String>() {
@@ -124,7 +124,7 @@ public class NetworkManager {
                 params.put("posX", posX+"");
                 params.put("posY", posY+"");
                 params.put("name", name);
-                params.put("piNum", piNum+"");
+                params.put("piNum", Serial);
                 return params;
             }
         });
