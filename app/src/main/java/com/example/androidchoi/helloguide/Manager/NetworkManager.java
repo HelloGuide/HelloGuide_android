@@ -10,6 +10,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.begentgroup.xmlparser.XMLParser;
+import com.example.androidchoi.helloguide.model.BoardList;
 import com.example.androidchoi.helloguide.model.LoginData;
 import com.example.androidchoi.helloguide.model.PlaceData;
 import com.example.androidchoi.helloguide.model.PlaceList;
@@ -122,6 +123,36 @@ public class NetworkManager {
                 params.put("posY", posY+"");
                 params.put("name", name);
                 params.put("piNum", Serial);
+                return params;
+            }
+        });
+
+    }
+
+    // get Board List Method
+    private  static final String GET_BOARD_LIST = SERVER + "/getBoardDatas";
+    public void getBoardList(final String category, final String keyword
+            ,final OnResultListener<BoardList> listener){
+        request.add(new StringRequest(Request.Method.POST, GET_BOARD_LIST,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        BoardList boardList = gson.fromJson(response, BoardList.class);
+                        listener.onSuccess(boardList);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        listener.onFail(volleyError.getMessage());
+                    }
+                })
+        {
+            @Override
+            protected Map<String,String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("cate", category);
+                params.put("keyword", keyword);
                 return params;
             }
         });
