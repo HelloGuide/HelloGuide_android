@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlaceInfoPagerAdapter extends FragmentStatePagerAdapter {
-    final int PAGE_COUNT = 2;
+    final int PAGE_COUNT = 3;
 
     private String[] mTabTitles = new String[PAGE_COUNT];
     private List<Fragment> mFragments = new ArrayList<>();
