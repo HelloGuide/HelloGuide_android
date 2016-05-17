@@ -12,6 +12,9 @@ import android.widget.Toast;
 import com.example.androidchoi.helloguide.Manager.MyApplication;
 import com.example.androidchoi.helloguide.Manager.NetworkManager;
 import com.example.androidchoi.helloguide.Manager.PropertyManager;
+import com.example.androidchoi.helloguide.model.LoginData;
+import com.example.androidchoi.helloguide.model.User;
+import com.example.androidchoi.helloguide.model.UserInfo;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -23,16 +26,18 @@ public class SplashActivity extends AppCompatActivity {
         String id = PropertyManager.getInstance().getId();
         if (!TextUtils.isEmpty(id)) {
             String password = PropertyManager.getInstance().getPassword();
-            NetworkManager.getInstance().login(id, password, new NetworkManager.OnResultListener<String>() {
+            NetworkManager.getInstance().login(id, password, new NetworkManager.OnResultListener<LoginData>() {
                 @Override
-                public void onSuccess(String result) {
-                    if (result.equals(LoginFragment.MESSAGE_SUCCESS)) {
+                public void onSuccess(LoginData result) {
+                    if (result.getMessage().equals(LoginFragment.MESSAGE_SUCCESS)) {
+                        UserInfo userInfo = result.getUserInfo();
+                        User.getInstance().setUser(userInfo.getEmail(), userInfo.getName()
+                                , userInfo.getAge(), userInfo.getGender());
                         goMain();
                     } else {
                         goLogin();
                     }
                 }
-
                 @Override
                 public void onFail(String error) {
                     Log.i("error : ", error);

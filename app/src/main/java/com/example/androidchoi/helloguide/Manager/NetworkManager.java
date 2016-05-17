@@ -10,6 +10,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.begentgroup.xmlparser.XMLParser;
+import com.example.androidchoi.helloguide.model.LoginData;
 import com.example.androidchoi.helloguide.model.PlaceData;
 import com.example.androidchoi.helloguide.model.PlaceList;
 import com.google.gson.Gson;
@@ -129,12 +130,13 @@ public class NetworkManager {
 
     //로그인
     private static final String LOG_IN = SERVER + "/login";
-    public void login(final String id, final String pw, final OnResultListener<String> listener){
+    public void login(final String id, final String pw, final OnResultListener<LoginData> listener){
         request.add(new StringRequest(Request.Method.POST, LOG_IN,
                 new Response.Listener<String>() {
                     @Override
-                    public void onResponse(String s) {
-                        listener.onSuccess(s);
+                    public void onResponse(String response) {
+                        LoginData loginData = gson.fromJson(response, LoginData.class);
+                        listener.onSuccess(loginData);
                     }
                 },
                 new Response.ErrorListener() {
