@@ -1,4 +1,5 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
@@ -10,4 +11,20 @@
         android:id="@+id/recylerView_board_list"
         android:padding="@dimen/dimen_small_default"
         android:clipToPadding="false"/>
-</FrameLayout>
+
+    <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/fab_write_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/fab_add"
+        app:fab_colorNormal="@color/colorPrimary"
+        app:fab_colorPressed="@color/colorPrimaryDark"
+        app:fab_colorRipple="@color/colorPrimary"
+        app:fab_label="@string/write_post"
+        app:fab_size="normal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="@dimen/dimen_default"
+        android:layout_marginBottom="@dimen/dimen_default"/>
+</RelativeLayout>

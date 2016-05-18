@@ -48,6 +48,9 @@
         <!-- 백그라운드 비콘 스캔 서비스 -->
         <service android:name="com.perples.recosdk.RECOBeaconService" />
         <service android:name=".Service.RecoBackgroundMonitoringService" />
+
+        <activity android:name=".WritePostActivity" >
+        </activity>
     </application>
 
 </manifest>

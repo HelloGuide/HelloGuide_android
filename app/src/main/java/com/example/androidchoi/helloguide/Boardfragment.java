@@ -1,5 +1,6 @@
 package com.example.androidchoi.helloguide;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,11 +17,13 @@ import com.example.androidchoi.helloguide.Manager.MyApplication;
 import com.example.androidchoi.helloguide.Manager.NetworkManager;
 import com.example.androidchoi.helloguide.ViewHolder.BoardHeaderItemViewHolder;
 import com.example.androidchoi.helloguide.model.BoardList;
+import com.github.clans.fab.FloatingActionButton;
 
 public class Boardfragment extends Fragment {
     private static final String ARG_CATEGORY = "category";
 
     private String mCategory;
+    FloatingActionButton mFloatingActionButton;
     RecyclerView mRecyclerView;
     BoardListAdapter mBoardListAdapter;
     ArrayAdapter<String> mArrayAdapters;
@@ -66,6 +69,16 @@ public class Boardfragment extends Fragment {
             }
         });
 
+        mFloatingActionButton = (FloatingActionButton)view.findViewById(R.id.fab_write_post);
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), WritePostActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
         getBoardList(mCategory, " ");
         return view;
     }
@@ -85,6 +98,5 @@ public class Boardfragment extends Fragment {
                 Toast.makeText(MyApplication.getContext(), "데이터를 불러 올 수 없습니다.", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 }

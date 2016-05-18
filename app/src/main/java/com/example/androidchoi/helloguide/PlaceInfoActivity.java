@@ -49,6 +49,7 @@ public class PlaceInfoActivity extends AppCompatActivity {
         // 뷰페이저 설정
         mViewPager = (ViewPager)findViewById(R.id.view_pager);
         mViewPager.setAdapter(mPlaceInfoPagerAdapter);
+        mViewPager.setOffscreenPageLimit(mPlaceInfoPagerAdapter.getCount()-1);
         mTabLayout = (TabLayout)findViewById(R.id.sliding_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
     }
