@@ -8,11 +8,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.androidchoi.helloguide.Adapter.BoardListAdapter;
 import com.example.androidchoi.helloguide.Manager.MyApplication;
 import com.example.androidchoi.helloguide.Manager.NetworkManager;
+import com.example.androidchoi.helloguide.ViewHolder.BoardHeaderItemViewHolder;
 import com.example.androidchoi.helloguide.model.BoardList;
 
 public class Boardfragment extends Fragment {
@@ -21,6 +23,7 @@ public class Boardfragment extends Fragment {
     private String mCategory;
     RecyclerView mRecyclerView;
     BoardListAdapter mBoardListAdapter;
+    ArrayAdapter<String> mArrayAdapters;
 
     public static Boardfragment newInstance(String category) {
         Boardfragment fragment = new Boardfragment();
@@ -50,20 +53,30 @@ public class Boardfragment extends Fragment {
 
         // Setting RecyclerView, BoardListAdapter
         mRecyclerView = (RecyclerView)view.findViewById(R.id.recylerView_board_list);
+
+        // Spinner
         mBoardListAdapter = new BoardListAdapter();
         mRecyclerView.setAdapter(mBoardListAdapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
-        getBoardList(); // 게시글 목록 불러오기
+        mBoardListAdapter.setOnSpinnerSelectListener(new BoardHeaderItemViewHolder.OnSpinnerSelectListener() {
+            @Override
+            public void onSpinnerSelect(String category) {
+                getBoardList(category, ""); // 카테고리에 맞는 게시글 불러옴.
+            }
+        });
+
+        getBoardList(mCategory, " ");
         return view;
     }
 
     // 게시글 목록 불러오는 method
-    public void getBoardList(){
-        NetworkManager.getInstance().getBoardList("1", " ", new NetworkManager.OnResultListener<BoardList>() {
+    public void getBoardList(String category, String keyword){
+        NetworkManager.getInstance().getBoardList(category, keyword, new NetworkManager.OnResultListener<BoardList>() {
             @Override
             public void onSuccess(BoardList result) {
-                mBoardListAdapter.setItems(result.getBoardDatas());
+                if(result.getBoardDatas() != null)
+                    mBoardListAdapter.setItems(result.getBoardDatas());
             }
 
             @Override

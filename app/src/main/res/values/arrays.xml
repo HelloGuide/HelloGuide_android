@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="place_category">
+        <item>경회루</item>
+        <item>근정문 및 행각</item>
+        <item>근정전</item>
+        <item>사정전</item>
+        <item>수정전</item>
+        <item>십장생 굴뚝</item>
+        <item>아미산 굴뚝</item>
+        <item>육상궁</item>
+        <item>자경전</item>
+        <item>풍기대</item>
+        <item>향원정</item>
+    </string-array>
+</resources>

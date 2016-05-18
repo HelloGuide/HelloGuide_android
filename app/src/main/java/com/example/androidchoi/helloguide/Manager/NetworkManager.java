@@ -15,6 +15,7 @@ import com.example.androidchoi.helloguide.model.LoginData;
 import com.example.androidchoi.helloguide.model.PlaceData;
 import com.example.androidchoi.helloguide.model.PlaceList;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.ByteArrayInputStream;
 import java.net.CookieHandler;
@@ -137,8 +138,14 @@ public class NetworkManager {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        BoardList boardList = gson.fromJson(response, BoardList.class);
+                        BoardList boardList = new BoardList();
+                        try{
+                            boardList = gson.fromJson(response, BoardList.class);
+                        } catch (JsonSyntaxException e) {
+                            e.printStackTrace();
+                        }
                         listener.onSuccess(boardList);
+
                     }
                 },
                 new Response.ErrorListener() {
