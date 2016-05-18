@@ -7,6 +7,10 @@ import android.widget.TextView;
 import com.example.androidchoi.helloguide.R;
 import com.example.androidchoi.helloguide.model.BoardData;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class BoardItemViewHolder extends RecyclerView.ViewHolder {
 
     //아이템 클릭 리스너
@@ -43,10 +47,24 @@ public class BoardItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     // View 세팅 메소드
-    public void setItems(BoardData boardData){
+    public void setItems(BoardData boardData) throws ParseException {
         mTextTitle.setText(boardData.getTitle());
         mTextContent.setText(boardData.getContent());
         mTextAuthor.setText(boardData.getAuthor());
-        mTextDate.setText(boardData.getDate());
+        mTextDate.setText(changeDateFormat(boardData.getDate()));
+    }
+
+    public String changeDateFormat(String dateString) throws ParseException {
+        final String OLD_FORMAT = "yyyy-MM-dd'T'HH:mm";
+        final String NEW_FORMAT = "yyyy.MM.dd HH:mm";
+
+        String oldDateString = dateString;
+        String newDateString;
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat(OLD_FORMAT);
+        Date date = dateFormat.parse(oldDateString);
+        dateFormat.applyPattern(NEW_FORMAT);
+        newDateString = dateFormat.format(date);
+        return newDateString;
     }
 }

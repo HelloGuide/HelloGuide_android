@@ -9,6 +9,7 @@ import com.example.androidchoi.helloguide.R;
 import com.example.androidchoi.helloguide.ViewHolder.BoardItemViewHolder;
 import com.example.androidchoi.helloguide.model.BoardData;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +47,11 @@ public class BoardListAdapter extends RecyclerView.Adapter<BoardItemViewHolder> 
 
     @Override
     public void onBindViewHolder(BoardItemViewHolder holder, int position) {
-        holder.setItems(mItems.get(position));
+        try {
+            holder.setItems(mItems.get(position));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         holder.setOnItemClickListener(mItemClickListener);
     }
 
