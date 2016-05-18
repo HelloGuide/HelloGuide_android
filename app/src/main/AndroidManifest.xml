@@ -49,7 +49,9 @@
         <service android:name="com.perples.recosdk.RECOBeaconService" />
         <service android:name=".Service.RecoBackgroundMonitoringService" />
 
-        <activity android:name=".WritePostActivity" >
+        <activity android:name=".WritePostActivity"
+                  android:windowSoftInputMode="adjustResize">
+
         </activity>
     </application>
 
