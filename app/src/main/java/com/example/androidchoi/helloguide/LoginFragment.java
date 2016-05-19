@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.example.androidchoi.helloguide.Manager.MyApplication;
 import com.example.androidchoi.helloguide.Manager.NetworkManager;
 import com.example.androidchoi.helloguide.Manager.PropertyManager;
-import com.example.androidchoi.helloguide.model.LoginData;
+import com.example.androidchoi.helloguide.model.ResponseData;
 import com.example.androidchoi.helloguide.model.User;
 import com.example.androidchoi.helloguide.model.UserInfo;
 
@@ -77,9 +77,9 @@ public class LoginFragment extends Fragment {
     public void logIn() {
         final String email = mEditEmail.getText().toString();
         final String password = mEditPassWord.getText().toString();
-        NetworkManager.getInstance().login(email, password, new NetworkManager.OnResultListener<LoginData>() {
+        NetworkManager.getInstance().login(email, password, new NetworkManager.OnResultListener<ResponseData>() {
             @Override
-            public void onSuccess(LoginData result) {
+            public void onSuccess(ResponseData result) {
                 if(result.getMessage().equals(MESSAGE_SUCCESS)){
                     UserInfo userInfo = result.getUserInfo();
                     PropertyManager.getInstance().setId(email);

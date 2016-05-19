@@ -45,6 +45,13 @@ public class BoardHeaderItemViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
+    // 게시판 설정 메소드
+    public void setItems(String category){
+        if(mArrayAdapters.getPosition(category) != -1) {
+            mSpinnerCategory.setSelection(mArrayAdapters.getPosition(category));
+        }
+    }
+
     // Spinner 세팅 메소드
     public void initArrayAdapter(){
         mArrayAdapters = new ArrayAdapter<String>(MyApplication.getContext(), R.layout.spinner_header_item_card);

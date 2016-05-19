@@ -1,5 +1,6 @@
 package com.example.androidchoi.helloguide;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.androidchoi.helloguide.Adapter.BoardListAdapter;
@@ -21,12 +21,13 @@ import com.github.clans.fab.FloatingActionButton;
 
 public class Boardfragment extends Fragment {
     private static final String ARG_CATEGORY = "category";
+    private static final String EXTRA_CATEGORY = "category";
+    private static final int REQUEST_WRITE_POST = 0;
 
     private String mCategory;
     FloatingActionButton mFloatingActionButton;
     RecyclerView mRecyclerView;
     BoardListAdapter mBoardListAdapter;
-    ArrayAdapter<String> mArrayAdapters;
 
     public static Boardfragment newInstance(String category) {
         Boardfragment fragment = new Boardfragment();
@@ -38,6 +39,14 @@ public class Boardfragment extends Fragment {
 
     public Boardfragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -57,8 +66,7 @@ public class Boardfragment extends Fragment {
         // Setting RecyclerView, BoardListAdapter
         mRecyclerView = (RecyclerView)view.findViewById(R.id.recylerView_board_list);
 
-        // Spinner
-        mBoardListAdapter = new BoardListAdapter();
+        mBoardListAdapter = new BoardListAdapter(mCategory);
         mRecyclerView.setAdapter(mBoardListAdapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
@@ -74,7 +82,8 @@ public class Boardfragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), WritePostActivity.class);
-                startActivity(intent);
+                intent.putExtra(EXTRA_CATEGORY, mCategory);
+                startActivityForResult(intent, REQUEST_WRITE_POST);
 
             }
         });

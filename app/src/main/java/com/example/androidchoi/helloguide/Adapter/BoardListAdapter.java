@@ -19,6 +19,11 @@ public class BoardListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private static final int TYPE_ITEM = 1;
 
     List<BoardData> mItems = new ArrayList<>();
+    String mCategory;
+
+    public BoardListAdapter(String category) {
+        mCategory = category;
+    }
 
     BoardHeaderItemViewHolder.OnSpinnerSelectListener mHeaderSpinnerSelectListener;
     public void setOnSpinnerSelectListener(BoardHeaderItemViewHolder.OnSpinnerSelectListener listener) {
@@ -64,6 +69,7 @@ public class BoardListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         if(holder instanceof BoardHeaderItemViewHolder){
             BoardHeaderItemViewHolder boardHeaderItemViewHolder = (BoardHeaderItemViewHolder)holder;
             boardHeaderItemViewHolder.setOnSpinnerClickListener(mHeaderSpinnerSelectListener);
+            boardHeaderItemViewHolder.setItems(mCategory);
         }
         else if(holder instanceof BoardItemViewHolder) {
             BoardItemViewHolder boardItemViewHolder = (BoardItemViewHolder)holder;

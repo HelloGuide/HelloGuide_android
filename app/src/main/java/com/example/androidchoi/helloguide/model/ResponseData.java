@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by Choi on 2016-05-17.
  */
-public class LoginData {
+public class ResponseData {
     private String message;
     @SerializedName("memInfo")
     private UserInfo mUserInfo;

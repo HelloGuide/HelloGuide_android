@@ -3,6 +3,7 @@ package com.example.androidchoi.helloguide.Manager;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -11,7 +12,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.begentgroup.xmlparser.XMLParser;
 import com.example.androidchoi.helloguide.model.BoardList;
-import com.example.androidchoi.helloguide.model.LoginData;
+import com.example.androidchoi.helloguide.model.ResponseData;
 import com.example.androidchoi.helloguide.model.PlaceData;
 import com.example.androidchoi.helloguide.model.PlaceList;
 import com.google.gson.Gson;
@@ -166,15 +167,51 @@ public class NetworkManager {
 
     }
 
+    // 게시글 작성 요청 메소드
+    private static final String WRITE_POST = SERVER + "/saveBoardDatas";
+    public void writePost(final String title, final String content, final String category, final OnResultListener<ResponseData> listener){
+        request.add(new StringRequest(Request.Method.POST, WRITE_POST,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("asdafaf", response);
+                        ResponseData responseData = gson.fromJson(response, ResponseData.class);
+                        listener.onSuccess(responseData);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Log.i("Error", volleyError.getMessage());
+                        listener.onFail(volleyError.getMessage());
+                    }
+                })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("title", title);
+                params.put("content", content);
+                params.put("cate", category);
+                return params;
+            }
+
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                return super.parseNetworkResponse(response);
+            }
+        });
+    }
+
     //로그인
     private static final String LOG_IN = SERVER + "/login";
-    public void login(final String id, final String pw, final OnResultListener<LoginData> listener){
+    public void login(final String id, final String pw, final OnResultListener<ResponseData> listener){
         request.add(new StringRequest(Request.Method.POST, LOG_IN,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        LoginData loginData = gson.fromJson(response, LoginData.class);
-                        listener.onSuccess(loginData);
+                        ResponseData responseData = gson.fromJson(response, ResponseData.class);
+                        listener.onSuccess(responseData);
                     }
                 },
                 new Response.ErrorListener() {

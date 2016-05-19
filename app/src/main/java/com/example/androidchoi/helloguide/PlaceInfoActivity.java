@@ -44,7 +44,7 @@ public class PlaceInfoActivity extends AppCompatActivity {
         mPlaceInfoPagerAdapter = new PlaceInfoPagerAdapter(getSupportFragmentManager());
         mPlaceInfoPagerAdapter.addFragment(PlaceContentFragment.newInstance(placeServerData));
         mPlaceInfoPagerAdapter.addFragment(OtherPlaceSearchFragment.newInstance(placeServerData));
-        mPlaceInfoPagerAdapter.addFragment(Boardfragment.newInstance(placeServerData.getSerial()));
+        mPlaceInfoPagerAdapter.addFragment(Boardfragment.newInstance(placeServerData.getName()));
         mPlaceInfoPagerAdapter.setTabList(new String[]{getString(R.string.place_info), getString(R.string.place_search),getString(R.string.board)}); // 탭 이름 설정
         // 뷰페이저 설정
         mViewPager = (ViewPager)findViewById(R.id.view_pager);
