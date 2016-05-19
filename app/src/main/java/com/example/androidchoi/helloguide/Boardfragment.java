@@ -21,7 +21,7 @@ import com.github.clans.fab.FloatingActionButton;
 
 public class Boardfragment extends Fragment {
     private static final String ARG_CATEGORY = "category";
-    private static final String EXTRA_CATEGORY = "category";
+    public static final String EXTRA_CATEGORY = "category";
     private static final int REQUEST_WRITE_POST = 0;
 
     private String mCategory;
@@ -46,7 +46,9 @@ public class Boardfragment extends Fragment {
         if (resultCode != Activity.RESULT_OK) {
             return;
         }
-        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_WRITE_POST){
+            getBoardList(mCategory, "");
+        }
     }
 
     @Override
@@ -66,14 +68,17 @@ public class Boardfragment extends Fragment {
         // Setting RecyclerView, BoardListAdapter
         mRecyclerView = (RecyclerView)view.findViewById(R.id.recylerView_board_list);
 
-        mBoardListAdapter = new BoardListAdapter(mCategory);
+        mBoardListAdapter = new BoardListAdapter();
+        mBoardListAdapter.setCategory(mCategory); // 게시판 카테고리 설정
         mRecyclerView.setAdapter(mBoardListAdapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
+        // 스피너 선택 리스너
         mBoardListAdapter.setOnSpinnerSelectListener(new BoardHeaderItemViewHolder.OnSpinnerSelectListener() {
             @Override
             public void onSpinnerSelect(String category) {
-                getBoardList(category, ""); // 카테고리에 맞는 게시글 불러옴.
+                mCategory = category;
+                getBoardList(mCategory, ""); // 카테고리에 맞는 게시글 불러옴.
             }
         });
 
@@ -84,23 +89,21 @@ public class Boardfragment extends Fragment {
                 Intent intent = new Intent(getActivity(), WritePostActivity.class);
                 intent.putExtra(EXTRA_CATEGORY, mCategory);
                 startActivityForResult(intent, REQUEST_WRITE_POST);
-
             }
         });
-
         getBoardList(mCategory, " ");
         return view;
     }
 
     // 게시글 목록 불러오는 method
-    public void getBoardList(String category, String keyword){
+    public void getBoardList(final String category, String keyword){
         NetworkManager.getInstance().getBoardList(category, keyword, new NetworkManager.OnResultListener<BoardList>() {
             @Override
             public void onSuccess(BoardList result) {
                 if(result.getBoardDatas() != null)
+                    mBoardListAdapter.setCategory(category);
                     mBoardListAdapter.setItems(result.getBoardDatas());
             }
-
             @Override
             public void onFail(String error) {
                 Log.i("error : ", error);

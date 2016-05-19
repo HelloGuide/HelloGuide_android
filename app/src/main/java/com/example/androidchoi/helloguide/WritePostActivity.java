@@ -1,10 +1,11 @@
 package com.example.androidchoi.helloguide;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -36,6 +37,8 @@ public class WritePostActivity extends AppCompatActivity {
         toolbar.setTitleTextColor(ContextCompat.getColor(getBaseContext(), android.R.color.white));
         setSupportActionBar(toolbar);
 
+        Intent intent = getIntent();
+        mCategory = intent.getStringExtra(Boardfragment.EXTRA_CATEGORY);
 
         mEditTextTitle = (EditText)findViewById(R.id.editText_post_title);
         mEditTextContent = (EditText)findViewById(R.id.editText_post_content);
@@ -102,6 +105,9 @@ public class WritePostActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_save) {
+            Log.i("mEditTextTitle", mEditTextTitle.getText().toString());
+            Log.i("mEditTextContent", mEditTextContent.getText().toString());
+            Log.i("mCategoy", mCategory);
             writePost(mEditTextTitle.getText().toString(), mEditTextContent.getText().toString(), mCategory);
             return true;
         }

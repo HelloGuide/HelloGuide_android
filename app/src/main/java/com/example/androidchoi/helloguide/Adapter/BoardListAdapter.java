@@ -21,7 +21,7 @@ public class BoardListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     List<BoardData> mItems = new ArrayList<>();
     String mCategory;
 
-    public BoardListAdapter(String category) {
+    public void setCategory(String category){
         mCategory = category;
     }
 
